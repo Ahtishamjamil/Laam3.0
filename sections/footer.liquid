@@ -1,0 +1,141 @@
+{% assign block_1 = section.blocks[0] %}
+{% assign block_2 = section.blocks[1] %}
+{% assign block_3 = section.blocks[2] %}
+{% assign block_4 = section.blocks[3] %}
+<div id="flip" style="float:right padding:10px;"><span>More About Online Shopping With LAAM</span> <i class='fa fa-angle-up'></i></div>
+{% assign blockCount =  section.blocks | size %}
+
+<div id="footer" >
+      <div class="container footer_text">
+        <div class="row footer_row">
+          {% for block in section.blocks %}
+          {% case block.type %}
+          
+            {% when 'linklist' %}
+          
+            {% assign linklist = linklists[block.settings.linklist] %}
+              <div class="{% if blockCount == 4%} col-xs-4 col-ms-6 footer_padding{% elsif blockCount == 3 %}col-xs-4 col-ms-6 footer_padding{% elsif blockCount == 2 %}col-sm-6 col-ms-6{% else %}col-xs-12{% endif %}">
+                <!-- <h4>{{ linklist.title | escape }}</h4> -->
+                {% if linklist != '' %}
+                <ul>
+                  {% for link in linklist.links %}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </div>
+             
+            {% when 'text' %}
+            <div class="{% if blockCount == 4%} col-xs-8 col-ms-6 footer_padding{% elsif blockCount == 3 %}col-xs-8 col-ms-6 footer_padding{% elsif blockCount == 2 %}col-xs-8 col-ms-6{% else %}col-xs-4{% endif %}">  
+              <h4 class='footer_heading'>{{ block.settings.title | escape }}</h4>
+                <div class="desc footer_p" style="font-size: 12px; color: #898989;">
+                  {{ block.settings.text }}
+                </div>
+              </div>
+          {% endcase %}
+          {% endfor %}     
+        </div> 
+      </div>
+      <div class="f_bot">
+        <div class="container footer_padding_top">
+            <div class="f_bot_left footer_copyrights">&copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }} {{ 'layout.footer.theme_credits_html' | t }} | {{ powered_by_link }}</div>
+          {% if section.settings.show_payment_methods and shop.enabled_payment_types != empty %}
+          <div class="f_bot_right">
+            <div class="partner">
+              <ul class="list-inline">
+                {% for type in shop.enabled_payment_types %}
+                <li>{{ type | payment_type_svg_tag: class:'payment-icon' }}</li>
+                {% endfor %}
+              </ul>
+            </div> 
+  
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+</div>
+<script>
+
+$(document).ready(function(){
+  $("#flip").click(function(){
+    $("#footer").slideToggle();
+    $(this).find(".fa").toggleClass('active');
+  });
+});
+  
+</script>
+{% schema %}
+  {
+    "name": "Footer",
+	"max_blocks": 4,	
+    "settings": [
+      {
+        "type": "header",
+        "content": "Bottom bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_payment_methods",
+        "label": "Show payment methods"
+      }
+    ],
+    "blocks" : [
+    {
+      "type": "linklist",
+      "name": "Menu",
+      "settings": [
+        {
+           "type": "link_list",
+           "id": "linklist",
+           "label": "Choose menu",
+           "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter / social icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Customers who sign up will have an account created for them in Shopify. You can sync to MailChimp with the official [MailChimp app](https://apps.shopify.com/mailchimp)."
+        },
+        {
+           "type": "textarea",
+           "id": "text",
+           "label": "Newsletter description",
+           "default": "Sign up for our newsletter and be the first to know about coupons and special promotions."
+        },
+		{
+           "type": "checkbox",
+           "id": "footer_display_social",
+           "label": "Enable social icons",
+		   "info": "Edit your social settings in the theme settings tab"
+      	}
+			
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Text column"
+        },
+        {
+          "type": "html",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>This is a custom textbox widget that you can use for any content you'd like.</p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

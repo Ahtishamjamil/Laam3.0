@@ -1,0 +1,43 @@
+{% assign product_value = product.metafields.delivery.name %}
+{% assign condition = shop.metafields.delivery[product_value] %}
+
+
+{% if product.metafields.delivery != blank %}
+   <div class="containe">
+      <div class="contentt">
+        <span>
+          {% if condition != blank %}
+            {{shop.metafields.delivery[product_value]}}
+          {% endif %}
+        </span>
+      </div>
+    </div>
+
+{% else %}
+
+  <div class="containe">
+    <div class="contentt">
+      <span>
+        {% if product.type == "Bridals" or product.type == "Bridal"%}
+          2 to 3 Months
+        {% endif %}
+
+        {% if product.type == "Formal" or product.type == "Formals"%}
+          1 to 2 Months 
+        {% endif %}
+
+        {% if product.type == "Luxury Pret" or product.type == "LuxuryPret" or product.type == "Luxurypret"%}
+          4 to 5 Weeks
+        {% endif %}
+
+        {% if product.type == "Pret" or product.type == "Prets"%}
+          <strong>Unstitched: </strong>1 Weeks <br>
+          <strong>Stitched: </strong> 2 to 3 Weeks
+        {% endif %}
+        {% if product.type == "Stitched Pret" or product.type == "stitched pret"%}
+          <strong>Stitched: </strong> 2 to 3 Weeks
+        {% endif %}
+      </span>
+    </div>
+  </div>
+{% endif %} 

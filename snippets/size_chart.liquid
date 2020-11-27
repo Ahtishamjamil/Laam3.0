@@ -1,0 +1,164 @@
+<!-- checking the name of the product entered through Metafield guru -->
+{% assign product_value = product.metafields.size_chart.name %}
+<!-- if there's JSON in there -->
+{% assign condition = shop.metafields.size_chart[product_value] %}
+
+{% if product.metafields.size_chart != blank %}
+	{% if condition != blank %}
+
+      <div id="section0" class="accordion"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web-icon.jpg?v=1600436557" alt="IMG">
+        <h3>SIZE GUIDE</h3>
+        <span></span></div>
+
+      <div class="container">
+        {% if shop.metafields.size_chart[product_value].shirt != blank %}
+          <div class="content">
+            <h3>{% if shop.metafields.size_chart[product_value].headings[0] != blank %}
+              {{shop.metafields.size_chart[product_value].headings[0]}} {% endif %}</h3>
+            <table>
+
+              <thead>
+
+                  {% for value in shop.metafields.size_chart[product_value].shirt_head %}
+
+                    <tr>
+
+                      {% assign keys = value | last %}
+
+                      <th> {{ value | first}}</th>
+                      {% for val in  keys %}
+
+                        <th>{{val}}</th>
+
+                      {% endfor %}
+
+                  {% endfor %}
+                  </tr>
+              </thead>
+
+              <tbody>
+
+                {% for value in shop.metafields.size_chart[product_value].shirt %}
+
+                <tr>
+
+                  {% assign keys = value | last %}
+
+                  <td> {{ value | first}}</td>
+                  {% for val in  keys %}
+
+                    <td>{{val}}</td>
+
+                  {% endfor %}
+                </tr>
+
+                {% endfor %}
+
+              </tbody>
+
+            </table>
+          </div>
+        {% endif %}
+
+          <!-- Pants section -->
+        {% if shop.metafields.size_chart[product_value].pant != blank %}
+          <div class="content">
+            <h3>{% if shop.metafields.size_chart[product_value].headings[1] != blank %}
+              {{shop.metafields.size_chart[product_value].headings[1]}}  {% endif %}</h3>
+            <table>
+
+              <thead>
+
+                {% for value in shop.metafields.size_chart[product_value].pant_head %}
+
+                    <tr>
+
+                      {% assign keys = value | last %}
+
+                      <th> {{ value | first}}</th>
+                      {% for val in  keys %}
+
+                        <th>{{val}}</th>
+
+                      {% endfor %}
+
+                {% endfor %}
+                  </tr>
+              </thead>
+              <tbody>
+
+                {% for value in shop.metafields.size_chart[product_value].pant %}
+
+                <tr>
+
+                  {% assign keys = value | last %}
+
+                  <td> {{ value | first}}</td>
+
+                  {% for val in  keys%}
+
+                    <td>{{val}}</td>
+
+                  {% endfor %}
+                </tr>
+
+                {% endfor %}
+
+              </tbody>
+
+            </table>
+          </div>
+        {% endif %}
+
+        <!-- third size chart -->
+          {% if shop.metafields.size_chart[product_value].third != blank %}
+          <div class="content">
+            <h3> {% if shop.metafields.size_chart[product_value].headings[2] != blank %}
+              {{shop.metafields.size_chart[product_value].headings[2]}} {% endif %} </h3>
+            <table>
+
+              <thead>
+
+                {% for value in shop.metafields.size_chart[product_value].third_head %}
+                    <tr>
+
+                      {% assign keys = value | last %}
+
+                      <th> {{ value | first}}</th>
+                      {% for val in  keys %}
+
+                        <th>{{val}}</th>
+
+                      {% endfor %}
+
+                {% endfor %}
+                  </tr>
+              </thead>
+              <tbody>
+
+                {% for value in shop.metafields.size_chart[product_value].third %}
+
+                <tr>
+
+                  {% assign keys = value | last %}
+
+                  <td> {{ value | first}}</td>
+
+                  {% for val in  keys%}
+
+                    <td>{{val}}</td>
+
+                  {% endfor %}
+                </tr>
+
+                {% endfor %}
+
+              </tbody>
+
+            </table>
+          </div>
+        {% endif %}
+      </div>
+      
+	{% endif %}
+{% endif %}

@@ -1,0 +1,63 @@
+{% assign on_sale = false %}
+{% if product.available and product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+<!-- Disabling soldout functionality because of bug in theme-->
+{% assign sold_out = true %}
+{% if product.available  %}
+  {% assign sold_out = false %}
+{% endif %}
+
+{% assign max_img_width = product.featured_image.width | append: "px" %}
+
+
+{% if settings.align_height %} 
+  {% assign max_img_height = settings.collection_height %}
+  {% assign product_img_width = product.featured_image.width %}
+  {% assign product_img_height = product.featured_image.height %}
+  {% assign product_img_ratio = product.featured_image.aspect_ratio %}
+		{% if max_img_height < product_img_height %}
+		{% assign max_img_width = max_img_height | times: product_img_ratio | append:"px"%}
+        {% else %}
+		{% assign max_img_width = product_img_height | times: product_img_ratio | append:"px"%}
+		{% endif %}
+{% endif %}
+
+<div class="main_box{% if section.settings.collection_overlay %} quick-view-overlay {% endif %}">
+  <div class="box_1 box_2">
+    {% if on_sale  %}
+    <div class="on-sale">{{ 'products.product.sale' | t }}</div>
+    {% endif %}
+    {% if sold_out %}
+    <div class="sold-out">{{ 'products.product.sold_out' | t }}</div>
+    {% endif %}
+    <div class="product-images">
+       
+      <a href="{{ product.url | within: collection }}">
+        <noscript>
+        <img  src="{{ product.featured_image.src | product_img_url: "master"}}" width="300" height="420" srcset="{{ product.featured_image.src | product_img_url: img_size}} 1x, {{ product.featured_image.src | product_img_url: img_size, scale: 2}} 2x, {{ product.featured_image.src | product_img_url: img_size, scale: 3}} 3x" alt="{{ product.featured_image.alt | escape }}">
+        </noscript>
+        <img class="custom_image_widt"
+             src="{{ product.featured_image.src | product_img_url: "master"}}" width="300" height="420"
+             data-srcset="{{ product.featured_image.src | product_img_url: img_size}} 1x, {{ product.featured_image.src | product_img_url: img_size, scale: 2}} 2x, {{ product.featured_image.src | product_img_url: img_size, scale: 3}} 3x"
+             alt="{{ product.featured_image.alt | escape }}"
+ 			 style="{% if max_img_width == '0px' %} width: auto; {% else %} max-height: auto !important; {% endif %}"/>  
+        
+        <!-- <div class="spinner-cube">
+           <div class="loadFacebookG"></div>
+        </div>	 -->
+        
+        
+      </a>
+      {% if section.settings.collection_overlay and product.template_suffix != 'nobuy' %}
+      <div class="overlay">
+        {% include 'product-quick-view-btn' qvp:product %}
+      </div>
+    {% endif %}
+    </div>
+   
+  </div>
+</div>
+
+<!--  -->

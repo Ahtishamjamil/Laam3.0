@@ -1,0 +1,59 @@
+<div
+  data-subsection
+  data-section-id="{{ block.id }}"
+  data-section-type="slideshow-section"
+  data-align-top="true"
+  {% if block.settings.parallax %}data-parallax="true"{% endif %} style="margin-top:{{block.settings.margin_sectio}}px;margin-bottom:{{block.settings.margin_bottom}}px;">
+  <div class="slideshow-wrapper">
+    <div id="Slideshow-{{ block.id }}"
+        class="hero hero--{{ block.settings.section_height }} hero--{{ block.id }} hero--mobile--{{ block.settings.mobile_height }} loading loading--delayed"
+        data-aos="hero__animation"
+        data-slide-count="1">
+        <div class="laam-banner slideshow__slide--{{ block.id }}" data-id="{{ block.id }}">
+           <div class="desktop-section-banner{% unless hero_text %} hero__image-wrapper--no-overlay{% endunless %}">
+              {% if block.settings.minibanner_image != blank %}
+                {%- assign img_url = block.settings.minibanner_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <a href="{{ block.settings.minibanner_1_link }}" class="hero__slide-link">
+                <img class="image-fit hero__image hero__image--{{ block.id }} lazyload"
+                  src=""
+                  data-src="{{ img_url }}"
+                  data-aspectratio="{{ block.settings.minibanner_image.aspect_ratio }}"
+                  data-sizes="auto"
+                  data-parent-fit="cover"
+                  alt="{{ block.settings.minibanner_image.alt | escape }}">
+                <noscript>
+                  <img class="image-fit hero__image hero__image--{{ block.id }}"
+                    src="{{ block.settings.minibanner_image | img_url: 'master' }}"
+                    alt="{{ block.settings.minibanner_image.alt | escape }}">
+                </noscript>
+              </a>
+            </div>
+          {% endif %}
+           <div class="mobile-section-banner{% unless hero_text %} hero__image-wrapper--no-overlay{% endunless %}">
+              {% if block.settings.minibanner_image1 != blank %}
+                {%- assign img_url = block.settings.minibanner_image1 | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <a href="{{ block.settings.minibanner_2_link }}" class="hero__slide-link">
+                <img class="image-fit hero__image hero__image--{{ block.id }} lazyload"
+                  src=""
+                  data-src="{{ img_url }}"
+                  data-aspectratio="{{ block.settings.minibanner_image1.aspect_ratio }}"
+                  data-sizes="auto"
+                  data-parent-fit="cover"
+                  alt="{{ block.settings.minibanner_image1.alt | escape }}">
+                <noscript>
+                  <img class="image-fit hero__image hero__image--{{ block.id }}"
+                    src="{{ block.settings.minibanner_image1 | img_url: 'master' }}"
+                    alt="{{ block.settings.minibanner_image1.alt | escape }}">
+                </noscript>
+              </a>
+            
+          {% endif %}
+             </div>
+     </div>
+        <div class="mobile-view slideshow__slide--{{ block.id }}" data-id="{{ block.id }}">
+          
+        </div>
+      </div>
+  </div>
+</div>
+

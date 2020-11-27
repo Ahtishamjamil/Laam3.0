@@ -1,0 +1,365 @@
+{%- assign gutter_width = 0 -%}
+{%- assign aspect_total = 0 -%}
+{% if block.settings.enable_gutter %}
+  {%- assign gutter_width = 1 -%}
+{% endif %}
+{%- assign gutter_total = gutter_width -%}
+{% capture image_count %}{% if block.settings.image_1 %}+{% endif %}{% if block.settings.image_2 %}+{% endif %}{% if block.settings.image_3 %}+{% endif %}{% if block.settings.image_4 %}+{% endif %}{% endcapture %}
+{%- assign image_index = 0 -%}
+{%- assign enable_zoom = block.settings.enable_zoom -%}
+
+{% comment %}
+  If any image links are set, disable zoom
+{% endcomment %}
+{% if block.settings.image_1_link != blank or block.settings.image_2_link != blank or block.settings.image_3_link != blank or block.settings.image_4_link != blank %}
+  {%- assign enable_zoom = false -%}
+{% endif %}
+
+<div class="category-productss "
+  data-subsection
+  data-section-id="{{ block.id }}"
+  {% if enable_zoom %}
+    data-section-type="photoswipe"
+    data-zoom="true"
+  {% endif %} style="margin-top:{{block.settings.margin_sectio}}px;margin-bottom:{{block.settings.margin_bottom}}px;">
+   {% if block.settings.title != '' %}
+  <a href="{{ block.settings.scroll_title }}">
+                  <h3 class="page-section-heading">
+                      <span class="inner">
+                          {% if settings.language_enable %}
+                              <span class="lang1">{{ block.settings.title | split: '|' | first }}</span>
+                              <span class="lang2">{{ block.settings.title | split: '|' | last }}</span>
+                          {% else %}
+                              {{ block.settings.title | split: '|' | first }}
+                          {% endif %}
+                      </span>
+            
+    </h3>
+  </a>
+    {% endif %} 
+  <div class="container custom_margin scrollimg">
+  <div id="featured-products-section-{{ section.id }}" class="carosel">
+  <ul class="page-galleryimage owl-carousel image-row{% if block.settings.enable_gutter %} image-row--gutters{% endif %}">
+    {% if block.settings.galleryimage_1 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item" >
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_1_link != blank %}
+            <a href="{{ block.settings.galleryimage_1_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_1 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_1.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_1.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_1.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_1.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080, 1500]"
+            data-aspectratio="{{ block.settings.galleryimage_1.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_1.alt }}">
+          {% if block.settings.galleryimage_1_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+    {% if block.settings.galleryimage_2 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_2_link != blank %}
+            <a href="{{ block.settings.galleryimage_2_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_2 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_2.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_2.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_2.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_2.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_2.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_2.alt }}">
+          {% if block.settings.galleryimage_2_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+    {% if block.settings.galleryimage_3 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_3_link != blank %}
+            <a href="{{ block.settings.galleryimage_3_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_3 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_3.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_3.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_3.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_3.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_3.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_3.alt }}">
+          {% if block.settings.galleryimage_3_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+    {% if block.settings.galleryimage_4 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_4_link != blank %}
+            <a href="{{ block.settings.galleryimage_4_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_4 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_4.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_4.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_4.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_4.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_4.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_4.alt }}">
+          {% if block.settings.galleryimage_4_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+     {% if block.settings.galleryimage_5 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_5_link != blank %}
+            <a href="{{ block.settings.galleryimage_5_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_5 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_5.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_5.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_5.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_5.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_5.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_5.alt }}">
+          {% if block.settings.galleryimage_5_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+     {% if block.settings.galleryimage_7 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_7_link != blank %}
+            <a href="{{ block.settings.galleryimage_7_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_7 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_7.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_7.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_7.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_7.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_7.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_7.alt }}">
+          {% if block.settings.galleryimage_7_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+    {% if block.settings.galleryimage_8 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_8_link != blank %}
+            <a href="{{ block.settings.galleryimage_8_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_8 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_8.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_8.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_8.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_8.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_8.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_8.alt }}">
+          {% if block.settings.galleryimage_8_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+    {% if block.settings.galleryimage_9 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_9_link != blank %}
+            <a href="{{ block.settings.galleryimage_9_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_9 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_9.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_9.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.gallerymage_9.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_9.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_9.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_9.alt }}">
+          {% if block.settings.galleryimage_9_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+    {% if block.settings.galleryimage_10 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_10_link != blank %}
+            <a href="{{ block.settings.galleryimage_10_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_10 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_10.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_10.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_10.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_10.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_10.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_10.alt }}">
+          {% if block.settings.galleryimage_10_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+    {% if block.settings.galleryimage_11 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_11_link != blank %}
+            <a href="{{ block.settings.galleryimage_11_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_11 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_11.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_11.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_11.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_11.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_11.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_11.alt }}">
+          {% if block.settings.galleryimage_11_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+    {% if block.settings.galleryimage_12 %}
+      {%- assign image_index = image_index | plus: 1 -%}
+      <li data-aos="item" class="item">
+        <div class="product-image-areaa">
+          {% if block.settings.galleryimage_12_link != blank %}
+            <a href="{{ block.settings.galleryimage_12_link }}">
+          {% endif %}
+          {%- assign img_url = block.settings.galleryimage_12 | img_url: 'master' | replace: '_1x1.', '_{width}x.' -%}
+          {%- assign aspect_total = aspect_total | plus: block.settings.galleryimage_12.aspect_ratio -%}
+          {%- assign gutter_total = gutter_total | plus: gutter_width -%}
+          <img class="lazyload photoswipe__image js-photoswipe__zoom"
+            data-index="{{ image_index }}"
+            data-photoswipe-src="{{ block.settings.galleryimage_12.src | img_url: 'master' }}"
+            data-photoswipe-width="{{ block.settings.galleryimage_12.width }}"
+            data-photoswipe-height="{{ block.settings.galleryimage_12.height }}"
+            data-src="{{ img_url }}"
+            data-widths="[180, 360, 540, 720, 900, 1080]"
+            data-aspectratio="{{ block.settings.galleryimage_12.aspect_ratio }}"
+            data-sizes="auto"
+            alt="{{ block.settings.galleryimage_12.alt }}">
+          {% if block.settings.galleryimage_12_link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      </li>
+    {% endif %}
+  </ul>
+  </div>
+</div>
+</div>
+
+{%- assign images_width = 100.0 | minus: gutter_total -%}
+{% style %}
+  .image-row-{{ block.id }}--1 {
+    margin: 0 0 {{ gutter_width }}% {{ gutter_width }}%;
+    width: {{ block.settings.image_1.aspect_ratio | divided_by: aspect_total | times: images_width }}% !important;
+  }
+  .image-row-{{ block.id }}--1:after {
+    padding-bottom: {{ 100 | divided_by: block.settings.image_1.aspect_ratio }}%;
+  }
+  .image-row-{{ block.id }}--2 {
+    margin: 0 0 {{ gutter_width }}% {{ gutter_width }}%;
+    width: {{ block.settings.image_2.aspect_ratio | divided_by: aspect_total | times: images_width }}% !important;
+  }
+  .image-row-{{ block.id }}--2:after {
+    padding-bottom: {{ 100 | divided_by: block.settings.image_2.aspect_ratio }}%;
+  }
+  .image-row-{{ block.id }}--3 {
+    margin: 0 0 {{ gutter_width }}% {{ gutter_width }}%;
+    width: {{ block.settings.image_3.aspect_ratio | divided_by: aspect_total | times: images_width }}% !important;
+  }
+  .image-row-{{ block.id }}--3:after {
+    padding-bottom: {{ 100 | divided_by: block.settings.image_3.aspect_ratio }}%;
+  }
+  .image-row-{{ block.id }}--4 {
+    margin: 0 0 {{ gutter_width }}% {{ gutter_width }}%;
+    width: {{ block.settings.image_4.aspect_ratio | divided_by: aspect_total | times: images_width }}% !important;
+  }
+  .image-row-{{ block.id }}--4:after {
+    padding-bottom: {{ 100 | divided_by: block.settings.image_4.aspect_ratio }}%;
+  }
+{% endstyle %}
+

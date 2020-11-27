@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en" class="noIE">
+  <head>
+
+   {%comment%} {% if template contains 'product' %}
+      {% include 'sizechartsrelentless' %}
+      {% include 'kiwiSizing' %}
+    {% endif %}  {%endcomment%}
+    <!-- Basic page needs ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!-- Title and description ================================================== -->
+    <title>
+      {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+
+    {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    <!-- Helpers ================================================== -->
+    {% include 'social-meta-tags' %}
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="theme-color" content="{{ settings.primary_color }}">
+
+    {% if settings.favicon != empty %}
+    <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+    {% endif %}
+     
+    {{ 'apps.css' | asset_url | stylesheet_tag }}
+    {{ 'style.scss.css' | asset_url | stylesheet_tag }}
+    {{ 'flexslider.css' | asset_url | stylesheet_tag }}
+    {{ 'flexslider-product.css' | asset_url | stylesheet_tag }}
+
+   
+    
+    <!-- Header hook for plugins ================================================== -->
+    {{ content_for_header }}
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--[if lt IE 9]>
+    {{ '//html5shiv.googlecode.com/svn/trunk/html5.js' | script_tag }}
+    <![endif]-->
+
+    {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+    {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+    {% endif %}
+
+ {%comment%}   {{ 'jquery.js' | asset_url | script_tag }} {%endcomment%}
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js" integrity="sha512-pXR0JHbYm9+EGib6xR/w+uYs/u2V84ofPrBpkgLYyKvhZYJtUUvKSy1pgi8tJZAacsPwgf1kbhI4zwgu8OKOqA==" crossorigin="anonymous"></script>
+  
+    
+    {{ '//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js' | script_tag }}
+
+    <script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
+    
+    
+    <!-- Theme Global App JS ================================================== -->
+    <script>
+      var app = app || {
+        data:{
+          template:{{ template | json }},
+          money_format: {{ shop.money_format | default:false | json }}
+        }
+      }
+  
+    </script>
+    {% include "no_script_styles" %}
+    
+    
+      <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-663036380');
+  </script>
+    
+    <!-- Event snippet for Purchase-laam conversion page -->
+    <script>
+      gtag('event', 'conversion', {
+          'send_to': 'AW-663036380/Zp9bCOGwluABENzDlLwC',
+          'transaction_id': ''
+      });
+    </script>
+    
+    
+
+    
+    
+  </head>
+
+  <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
+    
+    
+    
+    
+    
+    
+    <div class="wsmenucontainer clearfix">
+      <div class="overlapblackbg"></div>
+      {% if settings.show_entry_popup %}
+      {% include 'entry-popup' %}
+      {% endif %}
+
+      {% section 'header' %}
+     
+      {{ content_for_layout }}
+      
+	  {% section 'icon-buttons' %}	
+      {% section 'footer' %}
+      {{ 'jquery_accordion.js' | asset_url | script_tag }}
+      {{ 'jquery.magnific-popup.min.js' | asset_url | script_tag }}
+      {{ 'api.jquery.js' | asset_url | script_tag }}
+      {{ 'ajaxify-shop.js' | asset_url | script_tag }}
+      
+      {% if template contains 'blog' %}
+      {{ "masonry.pkgd.min.js" | asset_url  | script_tag }}
+      {{ "imagesloaded.pkgd.min.js" | asset_url  | script_tag }}
+      {% endif %}
+
+      {% if settings.show_multiple_currencies %}
+      {% include 'currencies' %}
+      {% endif %}
+
+      {% if template == 'index' or template contains 'product' or template contains 'page'%}
+      {{ 'jquery.owl.min.js' | asset_url | script_tag }}
+      {% endif %}
+
+      {{ 'scripts.js' | asset_url | script_tag }}
+      {% comment %} Ajaxinate code {% endcomment %}
+      {{ 'ajaxinate.min.js' | asset_url | script_tag }}
+    </div>
+  
+  <!-- Recent Product View  -->
+  
+
+  {{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+  {{ 'jquery.products.min.js' | asset_url | script_tag }}
+  
+  {% if template contains 'product' %}
+    
+<!--     page views: -->
+
+
+  
+  <script>
+  Shopify.Products.recordRecentlyViewed();
+  </script>
+  
+  {% endif %}
+  
+ 
+    
+    {% include 'aaa_wishlist_product' %}
+	{% include 'aaa_wishlist_login' %}
+   
+    
+{% render 'back-to-top' %}
+{% include 'site-whatsapp-btn' %}
+  </body>
+</html>

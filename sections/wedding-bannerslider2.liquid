@@ -1,0 +1,99 @@
+<div class="home-banner-slider">
+    <div class="carosel product_c">
+        <div class="row">
+         <div id="featured-products-section-{{ section.id }}" >
+            <div class="home-slider banner-desk owl-carousel">
+           {% for block in section.blocks %}
+           
+            {% if block.settings.brand_link %}<a href="{{ block.settings.brand_link }}">{% endif %}
+              <img src="{{ block.settings.slide_img | img_url: 'master' }}" alt="{{ block.settings.slideshow_image.alt }}">
+            {% if block.settings.brand_link %}</a>{% endif %}
+          
+           {% endfor %}
+          
+          
+           </div>
+           
+          
+          <div class="home-slider banner-mobile owl-carousel">
+            {% for block in section.blocks %}
+           
+           {% if block.settings.brand_link %}<a href="{{ block.settings.brand_link }}">{% endif %}
+              <img src="{{ block.settings.mobile_slide_img | img_url: 'master' }}" alt="{{ block.settings.mobile_slide_img.alt }}">
+            {% if block.settings.brand_link %}</a>{% endif %}
+           
+           {% endfor %}
+          
+          
+           </div>
+           
+          </div>
+        
+        </div> 
+      </div>
+    </div>
+    {% schema %}
+      {
+        "name": "wedding Banner Slider2",
+        "max_blocks": 20,
+        "settings": [
+        {
+            "type": "select", 
+             "id": "slideshow_width",
+              "label": "Layout", 
+               "options":[ 
+               { 
+             "value": "full", 
+             "label": "Full-width" 
+            }, { 
+              "value": "contained", 
+              "label": "Contained"
+        } ], 
+        "default": "full"
+        }, { 
+          "type": "checkbox",
+           "id": "show_brands_slider",
+            "label": "Enable brands slider",
+             "default": true }, { 
+               "type": "header",
+                "content": "Info" 
+              }], 
+        
+        "blocks" : [
+          {
+            "type": "Text",
+            "name": "Image",
+            
+            "settings": [
+    
+              {
+                "type": "header",
+                "content": "Image"
+              },
+              {
+                "type": "image_picker",
+                "id": "slide_img",
+                "label": "Desktop Banner"
+              },   	
+                {
+                "type": "image_picker",
+                "id": "mobile_slide_img",
+                "label": "Mobile Banner"
+              },
+              {
+                "type": "url",
+                "id": "brand_link",
+                "label": "Link"
+              }
+             ]
+        }
+      ],
+        "presets": [
+            {
+              "name": "wedding Banner Slider2",
+              "category": "Collection"
+            }
+          ]
+      }
+    {% endschema %}
+    

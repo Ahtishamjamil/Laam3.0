@@ -1,0 +1,113 @@
+{{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+{{ 'jquery.products.min.js' | asset_url | script_tag }}
+
+<div class="collection clearfix" id="recently-viewed-products" style="display:none">
+   <div class="pro-heading"> <h2>Recently Viewed Products</h2>
+</div>
+</div>
+{% raw %}
+
+<script id="recently-viewed-product-template" type="text/x-jquery-tmpl">
+  <div class="product" id="product-${handle}">
+      <div class="image">
+          <a href="${url}">
+              <img  src="${Shopify.Products.resizeImage(featured_image, "master")}"/>
+          </a>
+      </div>
+
+      </div>
+</script>
+{% endraw %}
+<script>
+  Shopify.Products.showRecentlyViewed({ howManyToShow: 4 });
+</script>
+
+ 
+<style>
+
+    /* Some styles to get you started */
+    .pro-heading h2 {
+    position: absolute;
+    top: 0px;
+    line-height: 30px;
+    float: left;
+    line-height: 30px;
+    float: left;
+    margin-top: 6px;
+    font-size: 22px;
+    font-weight: 700;
+    width: 100%;
+    padding: 7px 12px;
+    color: #000000 !important;
+}
+
+    .collection {
+        position: relative;
+    clear: both;
+    padding-top: 50px;
+    display: flex;
+    overflow-x: scroll;
+}
+.product:last-child {
+    margin: 0px;
+}
+.collection:first-child {
+  flex: 1 0 100%;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.collection::-webkit-scrollbar {
+  display: none;
+}
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .collection {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .collection .product.last {
+    margin-right: 0;
+  }
+
+  .product {
+    width: 100%;
+    margin-right: 30px;
+}
+
+  .collection .product .cy {
+    display: block;
+    margin: 0 auto;
+  }
+  .collection .product .image img {
+    max-width: 100%;
+  }
+
+  .collection .product .title {
+    display: block;
+    line-height: 16px;
+    font-size: 12px;
+    color: #222;
+    font-weight: 700;
+  }
+  .collection .product .price {
+    display: block;
+    line-height: 16px;
+    font-size: 11px;
+    color: #777;
+    font-weight: normal;
+  }
+  /* new clearfix */
+  .clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+  * html .clearfix {
+    zoom: 1;
+  } /* IE6 */
+  *:first-child + html .clearfix {
+    zoom: 1;
+  } /* IE7 */
+</style>

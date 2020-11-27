@@ -1,0 +1,789 @@
+{% assign collection_link = collection.url %}
+{% assign productDescriptionContent = product.description %}	
+{% assign descriptionParts = product.description | split: "<!-- split -->" %}
+{% if descriptionParts.size > 1%}
+  {% assign descriptionFirstPart = descriptionParts | first %}
+  {% assign descriptionSecondPart = descriptionParts | last %}
+{% endif %}
+
+<div itemscope itemtype="http://schema.org/Product">
+
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | product_img_url: '800x' }}">
+  
+  <div id="content">
+    <div class="container" data-section-id="{{ section.id }}" data-section-type="product-page-section" data-reviews-stars="{% if section.settings.product_reviews or section.settings.show_product_reviews_stars %}true{% else %}false{% endif%}">
+      <div class="product-json">{{ product | json }}</div> 
+      <input id="product-handle" type="hidden" value="{{product.handle}}"/> <!--  using for JS -->
+      {% include 'breadcrumb' %}
+      
+      <div class="pro_main_c">
+        <div class="row swatch-product-id-{{product.id}}">
+          <div class="col-lg-6 col-md-7 col-sm-6">
+            {% include 'product-gallery' %}
+
+          </div>
+          <div class="col-lg-6 col-md-5 col-sm-6">
+
+            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+              <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+              {% if product.selected_or_first_available_variant.available %}
+              <link itemprop="availability" href="http://schema.org/InStock" />
+              {% else %}
+              <link itemprop="availability" href="http://schema.org/OutOfStock" />
+              {% endif %} 
+
+            <div class="desc_blk">
+
+              <div class="title clearfix prodt-title mt-0">
+                {% assign title = product.title | split: ' ' %}
+                 {% capture productTitle %}{% for word in title %}{{ word | capitalize }} {% endfor %}{% endcapture %}
+           
+         
+         <!--         <h1 itemprop="name">{{ product.title | escape | capitalize }}</h1> -->
+                 <h1 itemprop="name">{{ productTitle }}</h1>
+                 
+                 <!-- <div class="title_right">
+                   <div class="next-prev">
+                     {% if collection %}            
+                     {% if collection.previous_product %}
+                     <a href="{{ collection.previous_product }}"><i class="fa fa-angle-double-left"></i> {{ 'products.general.previous_product' | t }}</a>
+                     {% endif %}
+                     {% if collection.next_product %}
+                     {% if collection.previous_product %} | {% endif %}
+                     <a href="{{ collection.next_product }}">{{ 'products.general.next_product' | t }} <i class="fa fa-angle-double-right"></i></a>
+                     {% endif %}
+                     {% endif %}
+                   </div>
+                 </div> -->
+               
+              <div class="share-wish-icons main-wish">
+                {% include 'aaa_wishlist_grid' %}
+                <!-- <i class="fa fa-share-alt share-it"></i> -->
+                <img class="share-it" src="https://cdn.shopify.com/s/files/1/2337/7003/files/share_icon_bara_wala_circle-12.png?v=1600512574">
+                </div>
+              </div> 
+              <!-- Vendor name -->
+              <div><h5 style="display: inline-block; border:none;">Designer:</h5>
+                {% assign vendor_link = product.vendor | handleize %}
+                <a style="color:#337ab7" href="{{shop.url}}/pages/{{vendor_link}}">{{product.vendor}}</a></div>
+                <!-- collection name -->
+                {% for collection in product.collections %}
+                  {% if collection.title contains '__' %}
+                    <div class="colec-name"><h5 style="display: inline-block; border:none;">Collection Name:</h5>
+                          {% assign raw = collection.title %}  
+                          {% assign clean_raw = raw | size | minus: 2  %} 
+                          {% assign collection_name = raw | slice : 0, clean_raw %} 
+                          {% assign collection_link = collection_name | handleize %}
+                          
+                          <a style="color:#337ab7" href="{{shop.url}}/collections/{{collection_link}}">{{collection_name}}</a>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+
+                <!-- <h5 style="border: none; padding: 0px 25px;">{{ 'products.general.description' | t }} :</h5> -->
+                
+                
+                
+               <!-- Different whatsapp numbers based on vendors -->
+                  
+               
+                <!-- Whatsapp button -->
+                <!-- <div class="whats-app">
+                    <span>
+                      <a class="whatsapp-btn" href="https://api.whatsapp.com/send?phone={{phoneNumber}}&text=Hi, I want to consult about this product {{ product.title | escape }} {{ shop.url | escape }}{{ product.url | escape }}"> <span><img src="{{ 'whatsapp.png' | asset_url }}" style="padding-right: 4px; padding-bottom: 2px;">Chat with fashion consultant</span></a>
+                    </span>
+                </div> -->
+                <span class="delivery-content"> Delivery Time Frame: {% render 'delivery-time' %}</span>
+
+              
+                <div class="rte bg-whites bridalform-content">
+                  <!-- consultant form below -->
+                  <div class="Bottom-accordion">
+                    <div class="accordion accordion-open" id="section00 form-heading section-whats-btn"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/customised-icon.png?v=1602654786" alt="IMG"> <h3>Price Query & Customization</h3>
+                        <!-- <img src="{{ 'laam-logo.png' | asset_img_url: '500x' }}" alt="LAAM LOGO" style="width: 24%;">-->
+                        
+                      <span></span></div> 
+                      <div class="container" style="display:block;">
+                      <div class="content">
+                <!-- {% form 'contact' %}
+                <div class="frm con_frm_inn">
+                <div class="row">
+                {% if form.posted_successfully? %}
+                <div class="alert alert-success m15">
+                    {{ 'contact.form.post_success' | t }}
+                </div>
+                {% endif %}
+                    <div class="">
+                        {% include 'form-errors-custom' %}
+                        
+                        <div class='row'>
+                            NAME 
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                              <h3 class="sub-form-heading">To know more about the customization details of the outfit or to inquire about the price, please connect with our fashion consultant or fill out the form.</h3>
+                  
+                                <div class="lbltxt">NAME:<span class="req">*</span></div>
+                                <input required type="text" id="contactFormName" class="txtbox width-100" name="contact[name]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                            </div>
+                            
+                            EMAIL 
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <div class="lbltxt">EMAIL:<span class="req">*</span></div>
+                                <input required type="email" name="contact[email]" id="contactFormEmail" class="txtbox width-100" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            PHONE 
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <div class="lbltxt">WHATSAPP NUMBER:<span class="req">*</span></div>
+                                <input required type="text" id="contactFormPhone" class="txtbox width-100" name="contact[phone]" autocapitalize="words" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                            </div>
+                            
+                            DESIGNER 
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <div class="lbltxt">FAVOURITE DESIGNER (MAY WRITE MORE THAN 1):<span class="req">*</span></div>
+                                <input required type="text" name="contact[designer]" id="contactFormDesigner" class="txtbox width-100" >
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            FUNCTION  
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <div class="lbltxt">FUNCTION:<span class="req">*</span></div>
+                                <select required class="width-100" id="ContactFormFunction" name="contact[Function]">
+                                    <option>Barat</option>
+                                    <option>Nikkah</option>
+                                    <option>Walima</option>
+                                    <option>Mehandi</option>
+                                </select>
+                            </div>
+                            
+                            TENTATIVE WEDDING DATE 
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <div class="lbltxt">WEDDING DATE (MONTH/YEAR):<span class="req">*</span></div>
+                                <input required type="text" name="contact[weddingDate]" id="contactFormWeddingDate" class="txtbox width-100" >
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            BUDGET 
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <div class="lbltxt">CHOOSE BUDGET:<span class="req">*</span></div>
+                                <select required class="width-100" id="ContactFormBudget" name="contact[Budget]">
+                                    <option>BELOW PKR 3,00,000</option>
+                                    <option>PKR 3,00,000 - PKR 4,00,000</option>
+                                    <option>PKR 4,00,000 - PKR 5,00,000</option>
+                                    <option>ABOVE PKR 5,00,000</option>
+                                </select>
+                            </div>
+                            
+                            DESCRIBE YOUR DREAM BRIDAL LOOK 
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <div class="lbltxt">DESCRIBE YOUR DREAM BRIDAL LOOK:<span class="req">*</span></div>
+                                <input required type="text" name="contact[dreamLook]" id="contactFormDreakLook" class="txtbox width-100" >
+                            </div>
+                        </div>
+
+                        FROM WHERE YOU HEARD ABOUT US 
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="lbltxt">WHERE DID YOU HEAR ABOUT US?:<span class="req">*</span></div>
+                                <input required type="text" name="contact[WhereYouHeard]" id="contactFormWhereYouHeard" class="txtbox width-100" >
+                            </div>
+                        </div>
+                        
+                        
+                
+                        <div class="row">
+                            <div class="col-sm-12 ">
+                            <div class="clearfix frm_bot">
+                                <input type="submit" class="btn_c" style="width: 100%;" value="{{ 'contact.form.send' | t }}">
+                                <input type="reset" class="info_btn" value="{{ 'contact.form.clear' | t }}"> 
+                                <span class="reqired">* {% comment %}{{ 'contact.form.required' | t }}  {% endcomment %}</span> 
+                            </div>
+                            </div>
+                        </div>
+
+                {% endform %}
+            
+        
+        </div>
+    </div>
+</div> -->
+<!-- Whatsapp button  -->
+                         {% if product.type == "Luxury Pret" or product.type == "luxurypret" or product.type == "luxury pret" or product.type == "Luxury pret" %}
+            
+
+                        <div class="whats-ap whatsapp-desktop">
+                  <span>
+                    <a class="whatsapp-btn" href="https://api.whatsapp.com/send?phone=923040049999&text=Hi, I want to consult about this product {{ product.title | escape }} {{ shop.url | escape }}{{ product.url | escape }}"> <div class="inner-whatsapp"><img src="{{ 'whatsapp-c.png' | asset_url }}" style="padding-right: 4px; padding-bottom: 2px;"><span class="whats-txtt">Chat with fashion consultant</span></div></a>
+                  </span>
+                </div> 
+                       
+                  {% else %}
+                  
+                    <div class="whats-ap whatsapp-desktop">
+                  <span>
+                    <a class="whatsapp-btn" href="https://api.whatsapp.com/send?phone=923114999871&text=Hi, I want to consult about this product {{ product.title | escape }} {{ shop.url | escape }}{{ product.url | escape }}"> <div class="inner-whatsapp"><img src="{{ 'whatsapp-c.png' | asset_url }}" style="padding-right: 4px; padding-bottom: 2px;"><span class="whats-txtt">Chat with fashion consultant</span></div></a>
+                  </span>
+                </div> 
+                       
+{% endif %}  
+
+                
+
+</div>
+</div>
+ 
+
+
+
+                  {% render 'size_chart' %}
+                  
+                  <div class="Bottom-accordion">
+                    <div class="accordion" id="section_description"><img alt="IMG" src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-01-02.png?v=1600437074">
+                      <h3>Product Descriptions</h3>
+                      <span></span></div>
+                      <div class="container">
+                      <div class="content">
+                        <!-- Description -->
+                {% if section.settings.enable_description_enhancements%}
+                {% if descriptionSecondPart != blank %}
+                <div class="rte main-product-description-{{ section.id }}" >	 
+                    {% if product.description contains '<!-- TABS -->' %}
+                        {{ descriptionSecondPart | split: "<!-- TABS -->"| first}}
+                    {% else %} 
+                        {{ descriptionSecondPart }}
+                    {% endif %}
+                </div>
+                {% else %}
+                <div itemprop="description" class="rte main-product-description-{{ section.id }}" >	 
+                    {% if product.description contains '<!-- TABS -->' %}
+                        {{ product.description | split: "<!-- TABS -->"| first}}
+                    {% else %} 
+                        {{ product.description }}
+                    {% endif %}
+                </div>
+                {% endif %} 
+                {% else %}
+                {% if descriptionSecondPart != blank %}
+                    <div class="rte main-product-description-{{ section.id }}" >	 
+                        {{ descriptionSecondPart | remove: "<!-- TABS -->" | remove: "<!-- /TABS -->" }}
+                </div>
+                {% else %}
+                    <div class="rte main-product-description-{{ section.id }}" >	 
+                        {{ product.description | remove: "<!-- TABS -->" | remove: "<!-- /TABS -->" }}
+                </div>
+                {% endif %}
+                {% endif %}
+                
+                {% if descriptionSecondPart != blank %}
+                <div class="rte description-first-part" itemprop="description">
+                {{ descriptionFirstPart }}
+                </div>
+                {% endif %}
+                        </div>
+                    </div>
+                    
+                    {% render 'return-policy' %}
+                    <div class="accordion" id="section5"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-01-03.png?v=1600437074  " alt="IMG"><h3>Buyers-protection</h3><span></span></div>
+                    <div class="container main-buyer-area">
+                    <div class="content">
+                      <ul class="buyers-icons"> 
+                        <li><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-06_7d543ae0-c407-43ef-b45c-fd6aede7ce6f.png?v=1602655516"></li>
+                        <li><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-09_a6f6f63b-fca3-499c-b5d0-5b5ea5757450.png?v=1602655516"></li>
+                        <li><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-07_dbc8d784-ce32-460a-9a54-f8ad7f46f655.png?v=1602655516"></li>
+                        <li><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-10_e06626c3-9f91-4943-81be-9a6b4faa68bd.png?v=1602655516"></li>
+                        <li><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-08_691becb3-7cfb-4df2-8d89-d7aa7be051a0.png?v=1602655516"></li>
+                        
+                       
+                         
+                      </ul>
+                      </div>
+                    </div>
+                    <div class="accordion img-ml" id="section6"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-01-04.png?v=1600437074" alt="img"><h3>Rating and Review</h3><span></span></div>
+                    <div class="container">
+                     <div class='parent flex-parent rr'>
+                      <div class='child flex-child rw'><span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span></div>
+                      <div class='child flex-child rw'><div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div></div>
+                    </div>
+                    </div>
+                      </div>
+                 
+
+                </div>
+                <!-- No Product by form -->
+                <!-- {% form 'contact' %}
+                    <div class="frm con_frm_inn">
+                        <div class="row"> 
+                            <p style="padding-top: 10px"> This product is made only on custom orders. Please fill out the form below and our fashion consultant will be in touch with you asap. </p>
+                        </div>
+                        <div class="row">
+                        {% if form.posted_successfully? %}
+                        <div class="alert alert-success m15">
+                        {{ 'contact.form.post_success' | t }}
+                        </div>
+                        {% endif %}
+                        <div class="m15">
+                        {% include 'form-errors-custom' %}
+                        </div>
+                        
+                        <div class="col-sm-6 nopadding">
+                            
+                            <div class="lbltxt">{{ 'contact.form.name' | t }}:</div>
+                            <input type="text" id="contactFormName" class="txtbox" name="contact[name]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" required>
+                        </div>
+                        <div class="col-sm-6 nopadding">
+                            <div class="lbltxt">{{ 'contact.form.email' | t }}:</div>
+                            <input type="email" name="contact[email]" id="contactFormEmail" class="txtbox" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-6 nopadding">
+                            <div class="lbltxt">{{ 'contact.form.phone' | t }}:</div>
+                            <input type="tel" name="contact[phone]" id="contactFormPhone" class="txtbox" pattern="[0-9]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" required>
+                        </div>
+                        </div>
+                        <div class="lbltxt">{{ 'contact.form.message' | t }}: </div>
+                        <textarea name="contact[body]" id="contactFormMessage">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+                        <input type="hidden" name="contact[product]" value=" {{ shop.url }}{{ product.url }} ">
+                        
+                        <div class="clearfix frm_bot">
+                            <input type="submit" class="btn_c" value="{{ 'contact.form.send' | t }}">
+                            <input type="reset" class="info_btn" value="{{ 'contact.form.clear' | t }}">
+                        </div>
+                    </div>
+                {% endform %} -->
+            
+                
+
+                <!-- product variant sku, vendor --> 
+
+                {% if section.settings.show_product_sku or section.settings.show_product_vendor or section.settings.show_product_quantity  %}
+                <div class="prod_sku_vend mob-sku">
+                {% if section.settings.show_product_sku %}
+                <div class="variant-sku"><strong>{{'products.general.product_sku' | t }}: </strong> {{ product.variants[0].sku }}</div>
+                {% endif %}
+                {% if section.settings.show_product_vendor %}
+                <div class="product-vendor"><strong>{{'products.general.product_vendor' | t }}: </strong> {{ product.vendor | link_to_vendor }}</div>
+                {% endif %}
+                    {% if section.settings.show_product_quantity %}
+                <div id="variant-inventory">
+                </div>
+                {% endif %}
+                </div>
+                {% endif %}
+
+                <!-- end product variant sku, vendor --> 
+
+                <!-- product tags -->
+
+                {% if section.settings.show_product_tags%}
+                {% if product.tags.size > 0 %}
+                <div class="tag_c clearfix product_tags">
+                {% if product.tags.size > 0 %}
+                <ul>
+                    <li>
+                    <span><b><span class="fa fa-tags"></span>{{'products.general.product_tags' | t}} :</b></span>
+                    {% for tag in product.tags %}
+                    <a class = "tag" href="/collections/all/{{ tag | handleize }}">{{ tag }}</a>
+                    {% endfor %}
+                    </li>
+                </ul>
+                {% endif %}
+                </div>
+                {% endif%}
+
+                <!-- end product tags -->
+
+                {% endif %}
+
+                <!-- bottom cart section end -->
+
+                <div class="review_row clearfix">
+                {% if section.settings.product_reviews %}
+                <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+                {% endif %}
+
+                <div class="share" style="display:none;">
+                  <i class="fa fa-close serch-close"></i>
+                  <div class="social-sharing">
+                    <ul>
+                      
+                      <h3>share it now</h3>
+                      {% include 'social-sharing' %}
+                    </ul>
+                  </div>
+                
+              </div>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+	   
+       {% if section.settings.enable_description_enhancements%}
+        
+        
+       {% if product.description contains '<!-- TABS -->' %}
+        {% assign product_reviews_tab_index = false %}
+        {% assign  tabsContent = product.description | split: "<!-- TABS -->" | last | remove: "<!-- /TABS -->"%}
+        {% assign tabsContentArray = tabsContent | split: "<h5>" %}
+         {% capture tabsContentArrayNoBlank %} 
+         {% for part in tabsContentArray %}
+			 {% if part != blank %}{{ part }}___{% endif %}
+          {% endfor %}
+          {% endcapture %}
+         {% assign tabsContentArrayFormated = tabsContentArrayNoBlank | split: "___"%}
+        <div class="tabing">
+           <ul class="nav nav-tabs"> 
+             {% for part in tabsContentArrayFormated %}
+                 {% if part != blank %}
+                   {% assign title_part = part | split: "</h5>" | first %}
+                   {% if title_part contains "Reviews" %}
+                    {% assign product_reviews_tab_index = forloop.index %}
+                   {% endif %}
+                   <li class="{% if forloop.first %} active{% endif %}"><a href="#tab{{forloop.index}}" data-toggle="tab">{{ title_part }}</a></li>
+               {% endif %}
+             {% endfor %}
+          </ul>
+
+
+         <div class="tab-content">           
+           {% for part in tabsContentArrayFormated %}
+             {% if part != blank %}
+               {% assign content_part = part | split: "</h5>" | last %}
+
+               <div class="tab-pane {% if forloop.first %} active{% endif %}" id="tab{{forloop.index}}">
+                 {% if forloop.index == product_reviews_tab_index %}
+                   {% if section.settings.product_reviews %}  
+                     {% comment %} This is place for reviews app code {% endcomment %}
+                     <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div> 
+                   {% else %}
+                     <div class="rte">
+                       {{content_part}}
+                     </div>
+                   {% endif %}
+                 {% else %}
+                   <div class="rte">
+                     {{content_part}}
+                   </div>
+                 {% endif %}
+               </div>
+           
+           	{% endif %}
+           {% endfor %}
+           
+          </div>
+
+        </div> 
+        {% endif %}
+        
+        {% else %}
+        
+        {% if section.settings.show_product_tab_1 %}
+        <div class="tabing">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">{{ section.settings.tab_1_title | escape }}</a></li>
+            {% if section.settings.show_product_tab_2 %}
+            <li><a href="#tab2" data-toggle="tab">{{ section.settings.tab_2_title | escape }}</a></li>
+            {% endif %}
+            {% if section.settings.show_product_tab_3 %}
+            <li><a href="#tab3" data-toggle="tab">{{ section.settings.tab_3_title | escape }}</a></li>
+            {% endif %}
+            {% if section.settings.show_product_tab_4 %}
+            <li><a href="#tab4" data-toggle="tab">{{ section.settings.tab_4_title | escape }}</a></li>
+            {% endif %}
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab1">
+              {% if section.settings.product_reviews %}
+              <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div> 
+              {% else %}
+              <div class="rte">
+                {% if section.settings.product_tab_1_page != '' %}
+                {{ pages[section.settings.product_tab_1_page].content }}
+                {% else %}
+                <p>{{ 'products.general.tab_no_page' | t }}</p>
+                {% endif %}  
+              </div>
+              {% endif %}
+            </div>
+            {% if section.settings.show_product_tab_2 %}
+            <div class="tab-pane" id="tab2">
+              <div class="rte">
+                {% if section.settings.product_tab_2_page != '' %}
+                {{ pages[section.settings.product_tab_2_page].content }}
+                {% else %}
+                <p>{{ 'products.general.tab_no_page' | t }}</p>
+                {% endif %}
+              </div>
+            </div>  
+            {% endif %}
+            {% if section.settings.show_product_tab_3 %}
+            <div class="tab-pane" id="tab3">
+              <div class="rte">
+                {% if section.settings.product_tab_3_page != '' %}
+                {{ pages[section.settings.product_tab_3_page].content }}
+                {% else %}
+                <p>{{ 'products.general.tab_no_page' | t }}</p>
+                {% endif %}
+              </div>
+            </div>  
+            {% endif %}
+            {% if section.settings.show_product_tab_4 %}
+            <div class="tab-pane" id="tab4">
+              <div class="rte">
+                {% if section.settings.product_tab_4_page != '' %}
+                {{ pages[section.settings.product_tab_4_page].content }}
+                {% else %}
+                <p>{{ 'products.general.tab_no_page' | t }}</p>
+                {% endif %} 
+              </div>
+            </div>  
+            {% endif %}
+          </div>
+
+        </div>
+        {% endif %}
+        
+        
+        {% endif %}
+
+        {% if section.settings.related_products %}
+        {% if section.settings.product_grid_layout == '4-col' %}
+        {% assign grid_item_width = '3' %}
+        {% elsif section.settings.product_grid_layout == '3-col' %}
+        {% assign grid_item_width = '4' %}
+        {% else %}
+        {% assign grid_item_width = '6' %}
+        {% endif %}
+        {% include 'related-products' %}
+        {% endif %}
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Product",
+    "settings": [
+      {
+        "type": "select",
+        "id": "show_product_cart_postion",
+        "label": "Cart button location",
+        "options": [
+          {
+            "value": "top",
+            "label": "Above product description"
+          },
+          {
+            "value": "bottom",
+            "label": "Below product description"
+          }
+        ],
+        "default": "bottom"
+      },
+	  
+	  {
+        "type": "checkbox",
+        "id": "show_smart_checkout",
+        "label": "Show dynamic checkout button",
+        "info": "Lets customers check out directly using a familiar payment method. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/change-the-layout\/dynamic-checkout)",
+		"default": true
+      },
+	  {
+        "type": "checkbox",
+        "id": "enable_description_enhancements",
+        "label": "Enhanced product description",
+		"info": "[Learn more](https://support.milehighthemes.com/article/111-using-product-description-enhancements-showtime-60)"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_reviews",
+        "label": "Enable reviews",
+        "info": "Requires free [Shopify Product Reviews](https:\/\/apps.shopify.com\/product-reviews) app."
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_swatches",
+        "label": "Enable swatches",
+        "info": "[Learn more](https:\/\/support.milehighthemes.com\/article\/155-using-product-swatches)"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_zoom",
+        "label": "Enable image zoom",
+        "info": "Recommended only if you have large, high-quality product images."
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_sku",
+        "label": "Show product \/ variant SKU"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_vendor",
+        "label": "Show product vendor"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_quantity",
+        "label": "Show stock status"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_tags",
+        "label": "Show product tags"
+      },
+      {
+        "type": "select",
+        "id": "product_additional_img",
+        "label": "Thumbnail image style",
+        "options": [
+          {
+            "value": "grid",
+            "label": "Grid"
+          },
+          {
+            "value": "carousel",
+            "label": "Carousel"
+          }
+        ],
+        "default": "grid"
+      },
+	  {
+        "type": "checkbox",
+        "id": "enable_images_limit",
+        "label": "Limit image height"
+      },
+	   {
+        "type": "range",
+        "id": "images_limit_height",
+        "label": "Images max height",
+         "min":       300,
+        "max":        800,
+        "step":       100,
+        "default": 500
+      },	
+ {
+        "type": "header",
+        "content": "Tabs",
+		"info": "Populate tabs here if description enhancements are not enabled above."
+      },
+     
+      {
+        "type": "checkbox",
+        "id": "show_product_tab_1",
+        "label": "Enable tab 1",
+        "info": "Required if you enable product reviews."
+      },
+    {
+        "type": "text",
+        "id": "tab_1_title",
+        "label": "Tab title",
+    	"default": "TAB 1"
+      },
+      {
+        "type": "page",
+        "id": "product_tab_1_page",
+        "label": "Choose page",
+        "info": "Specify a page here only if you are not using product reviews."
+      },  
+      {
+        "type": "checkbox",
+        "id": "show_product_tab_2",
+        "label": "Enable tab 2"
+      },
+    {
+        "type": "text",
+        "id": "tab_2_title",
+        "label": "Tab title",
+    "default": "TAB 2"
+      },  
+      {
+        "type": "page",
+        "id": "product_tab_2_page",
+        "label": "Choose page"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_tab_3",
+        "label": "Enable tab 3"
+      },
+    {
+        "type": "text",
+        "id": "tab_3_title",
+        "label": "Tab title",
+    "default": "TAB 3"
+      },  
+      {
+        "type": "page",
+        "id": "product_tab_3_page",
+        "label": "Choose page"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_tab_4",
+        "label": "Enable tab 4"
+      },
+    {
+        "type": "text",
+        "id": "tab_4_title",
+        "label": "Tab title",
+        "default": "TAB 4"
+      },  
+      {
+        "type": "page",
+        "id": "product_tab_4_page",
+        "label": "Choose page"
+      },
+    {
+        "type": "header",
+        "content": "Related products"
+      },
+      {
+        "type": "checkbox",
+        "id": "related_products",
+        "label": "Enable"
+      },
+	  {
+        "type": "checkbox",
+        "id": "show_sale_badge",
+        "label": "Show sale badge",
+		"default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "collection_overlay",
+        "label": "Enable product quick view"
+      },
+	  {
+        "type": "checkbox",
+        "id": "show_product_reviews_stars",
+        "label": "Show review stars",
+		"info": "Shopify product reviews app must be enabled"
+      } 	
+    ]
+  }
+{% endschema %}
+  {% javascript %}
+  <script>
+    //Product-page-accordion-js
+    $(document).ready(function() {
+      $('.accordion').accordion({
+      defaultOpen: 'section00',
+      cookieName: 'accordion_nav'
+      });
+    });
+    $( ".accordion" ).accordion({ active: 1 });
+    </script>
+  {% endjavascript%}

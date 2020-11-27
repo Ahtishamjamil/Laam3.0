@@ -1,0 +1,13 @@
+<div class="email_box">
+    {% form 'customer' %}
+        {{ form.errors | default_errors }}
+        {% if form.posted_successfully? %}
+            <div class="alert alert-success">{{ 'general.newsletter_form.confirmation' | t }}</div>
+        {% else %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" id="Email"  class="txtbox newsletter_bottom_margin" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off" required>
+            <input type="tel" name="contact[phone]" id="contactFormPhone" class="txtbox newsletter_bottom_margin" placeholder="+92 000 1234567" pattern="[0-9]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+            <input class="btn btn-link" type="submit" value="ENJOY 20% OFF" name="commit" id="Subscribe Subscribe_popup" style=" background:#B49312; width: 100%; color: #fff; font-size: 12px">
+        {% endif %}
+    {% endform %}
+</div> 

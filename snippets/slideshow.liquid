@@ -1,0 +1,21 @@
+<div class="home-banner-slider">
+<div class="carosel product_c">
+    <div class="row">
+        <div id="featured-products-section-{{ section.id }}" >
+        <div class="home-slider banner-desk owl-carousel">
+            {% if section.settings.brand_link %}<a href="{{ section.settings.brand_link }}">{% endif %}
+                <img src="{{ section.settings.slide_img | img_url: '2x' }}" alt="{{ section.settings.slideshow_image.alt }}">
+            {% if section.settings.brand_link %}</a>{% endif %}
+        </div>
+        
+        <div class="home-slider banner-mobile owl-carousel">
+            {% if section.settings.brand_link %}<a href="{{ section.settings.brand_link }}">{% endif %}
+                <img src="{{ section.settings.mobile_slide_img | img_url: '2x' }}" alt="{{ section.settings.mobile_slide_img.alt }}">
+            {% if section.settings.brand_link %}</a>{% endif %}
+        </div>
+        
+        </div>
+    
+    </div>
+    </div>
+</div>

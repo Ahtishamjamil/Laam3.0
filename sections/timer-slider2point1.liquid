@@ -1,0 +1,174 @@
+
+      <div class="page-blocks">
+         <div class="clearfix timerheading">
+        <a class="inner-timerheading" href="{{section.settings.title_link}}"><h2 class="h3_center">{{ section.settings.title | escape }}</h2></a>                                    
+      {% include 'countdownwith-slider'%}
+      </div>
+      
+
+<div class="container custom_margin scrollimg tim-slider">
+    <div class="carosel product_c">
+        <div class="row">
+         <div id="featured-products-section-{{ section.id }}" >
+            <div class="page-slidertwo owl-carousel">
+           {% for block in section.blocks %}
+           
+            {% if block.settings.brand_link %}<a href="{{ block.settings.brand_link }}">{% endif %}
+              <img src="{{ block.settings.slide_img | img_url: 'master' }}" alt="{{ block.settings.slideshow_image.alt }}">
+            {% if block.settings.brand_link %}</a>{% endif %}
+          
+           {% endfor %}
+          
+          
+           </div>
+          </div>
+           
+          </div> 
+        
+        </div>
+      </div>
+    </div>
+    {% schema %}
+      {
+        "name": "Timer with Slider2.1",
+        "max_blocks": 20,
+        "settings": [
+    {
+         "type":"text",
+         "id":"title",
+         "label":"Collection Title",
+         "default":"Timer"
+      },
+     {
+                "type": "url",
+                "id": "title_link",
+                "label": "Link"
+              },
+{
+        "type": "header",
+        "content": "Start date"
+      },
+    {
+      "type": "range",
+      "id": "start_year",
+      "label": "Year",
+        "min": 2019,
+        "max": 2023,
+        "step": 1,
+      "default": 2021
+    },
+    {
+      "type": "range",
+      "id": "start_month",
+      "label": "Month",
+        "min": 1,
+        "max": 12,
+        "step": 1,
+      "default": 11
+    },
+{
+      "type": "range",
+      "id": "start_day",
+      "label": "Day",
+        "min": 1,
+        "max": 31,
+        "step": 1,
+      "default": 27
+    },
+{
+      "type": "range",
+      "id": "start_hours",
+      "label": "Hours",
+        "min": 0,
+        "max": 23,
+        "step": 1,
+      "default": 20
+    },
+{
+      "type": "range",
+      "id": "start_minute",
+      "label": "Minute",
+        "min": 0,
+        "max": 60,
+        "step": 1,
+      "default": 0
+    },
+{
+      "type": "range",
+      "id": "start_second",
+      "label": "Seconds",
+        "min": 0,
+        "max": 60,
+        "step": 15,
+      "default": 0
+    },
+        {
+            "type": "select", 
+             "id": "slideshow_width",
+              "label": "Layout", 
+               "options":[ 
+               { 
+             "value": "full", 
+             "label": "Full-width" 
+            }, { 
+              "value": "contained", 
+              "label": "Contained"
+        } ], 
+        "default": "full"
+        }, 
+        { 
+          "type": "checkbox",
+           "id": "show_brands_slider",
+            "label": "Enable brands slider",
+             "default": true 
+         }, 
+
+
+
+
+
+
+
+            { 
+               "type": "header",
+                "content": "Info" 
+              }], 
+        
+        "blocks" : [
+          {
+            "type": "Text",
+            "name": "Image",
+            
+            "settings": [
+    
+              {
+                "type": "header",
+                "content": "Image"
+              },
+              {
+                "type": "image_picker",
+                "id": "slide_img",
+                "label": "Desktop Banner"
+              },   	
+                {
+                "type": "image_picker",
+                "id": "mobile_slide_img",
+                "label": "Mobile Banner"
+              },
+              {
+                "type": "url",
+                "id": "brand_link",
+                "label": "Link"
+              }
+             ]
+        }
+      ],
+        "presets": [
+            {
+              "name": "Timer with Slider2.1",
+              "category": "blogg"
+            }
+          ]
+      }
+    {% endschema %}
+    

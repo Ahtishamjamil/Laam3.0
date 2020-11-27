@@ -1,0 +1,95 @@
+<div
+  data-subsection
+  data-section-id="{{ block.id }}"
+  data-section-type="slideshow-section"
+  data-align-top="true"
+  {% if block.settings.parallax %}data-parallax="true"{% endif %} style="margin-top:{{block.settings.margin_sectio}}px;margin-bottom:{{block.settings.margin_bottom}}px;">
+  <div class="slideshow-wrapper">
+    <div id="Slideshow-{{ block.id }}"
+        class="hero hero--{{ block.settings.section_height }} hero--{{ block.id }} hero--mobile--{{ block.settings.mobile_height }}"
+        data-aos="hero__animation"
+        data-slide-count="1">
+          {% if block.settings.title != '' %}
+      <a href="{{ block.settings.scroll_title }}">
+                  <h3 class="page-section-heading">
+                      <span class="inner">
+                          {% if settings.language_enable %}
+                              <span class="lang1">{{ block.settings.title | split: '|' | first }}</span>
+                              <span class="lang2">{{ block.settings.title | split: '|' | last }}</span>
+                          {% else %}
+                              {{ block.settings.title | split: '|' | first }}
+                          {% endif %}
+                      </span>
+                  </h3>
+      </a>
+              {% endif %} 
+        <div class="slideshow__slide--{{ section.id }}" data-id="{{ section.id }}">
+            <div class="container custom_margin scrollimg">
+
+          
+               <div class="carosel product_c mb30" id="products-{{ section.id }}">
+        <div class="row">
+         {% if block.settings.elevenfeatured_collection != blank and collections[block.settings.elevenfeatured_collection].handle == block.settings.elevenfeatured_collection and collections[block.settings.elevenfeatured_collection].products_count > 0 %}
+          <div id="featured-products-section-{{ section.id }}" class="page-sliderone owl-carousel owl-theme featured-products {% if settings.align_height %} use_align_height {% else %} use_image_height {% endif %}">
+            {% for product in collections[block.settings.elevenfeatured_collection].products limit: block.settings.home_feature_product_limit %}
+            <div class="main_box_featured_collection" >
+                <div class="main_box{% if section.settings.collection_overlay %} quick-view-overlay {% endif %}">
+                <div class="box_1">
+                    {% if on_sale and section.settings.show_sale_badge %}
+                    <div class="on-sale">{{ 'products.product.sale' | t }}</div>
+                    {% endif %}
+                    {% if sold_out %}
+                    <div class="sold-out">{{ 'products.product.sold_out' | t }}</div>
+                    {% endif %}
+                    <div class="product-image">
+ 
+                      
+                    <a href="{{newStr.settings.promo_banner_link}}">
+                        <noscript>
+                        <img  src="{{ product.featured_image.src | product_img_url: "master"}}" width="300" height="420" >
+                        </noscript>
+                        <img class="lazyload" loading="lazy" data-src="{{ product.featured_image.src | product_img_url: "master"}}" width="300" height="420"
+             {% comment %}  1x, {{ product.featured_image.src | product_img_url: img_size, scale: 2}} 2x, {{ product.featured_image.src | product_img_url: img_size, scale: 3}} 3x" -->
+             alt="{{ product.featured_image.alt | escape }}{% endcomment %}
+ 			 style="{% if max_img_width == '0px' %} width: auto; {% else %} max-width: {{max_img_width}} {% endif %}"/>  
+        
+                        
+                        <!-- <div class="spinner-cube">
+                        <div class="loadFacebookG"></div>
+                        </div>	 -->
+                        
+                    </a>
+                    </div>
+                    {% if section.settings.collection_overlay and product.template_suffix != 'nobuy' %}
+                    <div class="overlay hidden-sm hidden-xs">
+                        {% include 'product-quick-view-btn' qvp:product %}
+                    </div>
+                    {% endif %}
+                </div>
+                </div>
+<img class="eleven-tag" src="https://cdn.shopify.com/s/files/1/2337/7003/files/11.11_tag.png?v=1604754106">
+            </div>
+            {% endfor %}
+           <img class="eleven-tag" src="https://cdn.shopify.com/s/files/1/2337/7003/files/11.11_tag.png?v=1604754106">
+          </div>
+          
+          {% else %}
+          <div id="featured-products-section-{{ section.id }}" class="owl-carousel owl-theme featured-products">
+            {% include 'onboarding-featured-products' %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+              
+              
+              
+              
+              
+              
+          </div>
+          
+        </div>
+      </div>
+  </div>
+</div>
+

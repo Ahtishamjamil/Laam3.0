@@ -1,0 +1,76 @@
+{% assign product_value = product.metafields.delivery.name %}
+{% assign condition = shop.metafields.delivery[product_value] %}
+
+
+{% if product.metafields.delivery != blank %}
+ <div class="accordion img-ml" id="section3"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-01.png?v=1600259260" alt="IMG"><h3> DELIVERY TIMELINE</h3><span></span></div>
+        <div class="container">
+      <div class="content">
+        <span>
+          {% if condition != blank %}
+          
+            
+          {% for collection in shop.metafields.delivery[product_value].collections %}
+
+	          {% for name in product.collections %}
+		
+				{% if name.title contains '__' %}
+					{% assign clean_raw = name.title | size | minus: 2  %}
+		            {% assign collection_name = name.title | slice : 0, clean_raw %}
+          			{% assign lower_collect = collection_name | downcase %}
+    
+          			{% if collection.collection-name == lower_collect %}
+          				Minimum {{collection.min-delivery}}days - Maximum {{collection.max-delivery}}days
+          				{% break %}
+          			{% endif %}
+          
+          		{% endif %}
+          
+        
+						          
+
+          		
+    	      {% endfor %}
+          	
+          {% endfor %}
+          {% endif %}
+        </span>
+      </div>
+    </div>
+
+{% else %}
+ <div class="accordion img-ml" id="section3"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-01.png?v=1600259260" alt="IMG"><h3> DELIVERY TIMELINE</h3><span></span></div>
+  
+  <div class="container">
+    <div class="content">
+      <span>
+        {% if product.type == "Bridals" or product.type == "Bridal"%}
+          2 to 3 Months
+        {% endif %}
+        
+        {% if product.type == "Bridal4" %}
+          4 Months
+        {% endif %}
+
+        {% if product.type == "Formal" or product.type == "Formals"%}
+          1 to 2 Months 
+        {% endif %}
+
+        {% if product.type == "Luxury Pret" or product.type == "LuxuryPret" or product.type == "Luxurypret"%}
+          4 to 5 Weeks
+        {% endif %}
+
+
+        {% if product.type == "Pret" or product.type == "Prets"%}
+          <strong>Unstitched: </strong>1 Week <br>
+          <strong>Stitched: </strong> 2 to 3 Weeks
+        {% endif %}
+        
+        {% if product.type == "Stitched Pret" or product.type == "stitched pret"%}
+          <strong>Stitched: </strong> 2 to 3 Weeks
+        {% endif %}
+      </span>
+    </div>
+  </div>
+{% endif %}
+

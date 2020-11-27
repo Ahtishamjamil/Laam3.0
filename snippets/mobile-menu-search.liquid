@@ -1,0 +1,19 @@
+{% assign product_only_search = settings.search_type_query %}
+{% assign grid_results = true %}
+
+<i class="fa fa-close serch-close"></i>
+<div id="mob-srch" class="mob-srch">
+ 
+  <form action="/search" method="get" role="search">
+    <div class="menu_c search_menu">
+      <div class="search_box">
+        {% if product_only_search == "search_products_only" %}
+        <input type="hidden" name="type" value="product">
+        {% endif %}
+        <input type="search" name="q" value="{{ search.terms | escape }}" class="txtbox" placeholder="Find your perfect pick" aria-label="{{ 'general.search.submit' | t }}">
+       <button class="btn btn-link" type="submit" value="{{ 'general.search.submit' | t }}"><img id="search_icon_search" class="search-icon" src="https://img.icons8.com/ios-glyphs/50/000000/search.png"></button>    </div>
+    </div>
+  </form>
+</div>
+ 
+

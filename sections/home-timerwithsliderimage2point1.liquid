@@ -1,0 +1,114 @@
+<div class="home-banner-slider">
+ <a href="{{ section.settings.title_link }}">
+  <h3 class="page-section-heading">
+                      <span class="inner">
+                          {% if section.settings.language_enable %}
+                              <span class="lang1">{{ section.settings.title_heading | split: '|' | first }}</span>
+                              <span class="lang2">{{ section.settings.title_heading | split: '|' | last }}</span>
+                          {% else %}
+                              {{ section.settings.title_heading | split: '|' | first }}
+                          {% endif %}
+                      </span>
+                  </h3>
+  </a>
+  <div class="page-blocks">
+  <div class="container custom_margin scrollimg">
+        <div class="carosel" id="featured-products-section-{{ section.id }}">
+            <div class="row">
+              
+            
+                <div id="featured-products-section-{{ section.id }}" class="page-sliderone owl-carousel owl-theme featured-products {% if settings.align_height %} use_align_height {% else %} use_image_height {% endif %}">
+               {% for block in section.blocks %}
+               
+                {% if block.settings.brand_linkk %}<a href="{{ block.settings.brand_linkk }}">{% endif %}
+                  <img src="{{ block.settings.slide_img | img_url: 'master' }}" alt="{{ block.settings.slideshow_image.alt }}">
+                {% if block.settings.brand_linkk %}</a>{% endif %}
+             <div class="counter-area">
+                  {% include 'countdownwith-slider'%}
+                  </div>
+               {% endfor %}
+              
+               </div>
+              
+               
+            
+            
+            </div>
+          </div>
+  </div>
+        </div>
+</div>
+        {% schema %}
+          {
+            "name": "Home Image1.2 with timer",
+            "max_blocks": 20,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title_heading",
+                    "label": "Title"
+                  },
+                   {
+                    "type": "url",
+                    "id": "title_link",
+                    "label": "Title Link"
+                  },
+            {
+                "type": "select", 
+                 "id": "slideshow_width",
+                  "label": "Layout", 
+                   "options":[ 
+                   { 
+                 "value": "full", 
+                 "label": "Full-width" 
+                }, { 
+                  "value": "contained", 
+                  "label": "Contained"
+            } ], 
+            "default": "full"
+            }, { 
+              "type": "checkbox",
+               "id": "show_brands_slider",
+                "label": "Enable brands slider",
+                 "default": true }, { 
+                   "type": "header",
+                    "content": "Info" 
+                  }], 
+          
+            "blocks" : [
+              {
+                "type": "Text",
+                "name": "Image",
+                
+                "settings": [
+        
+                  {
+                    "type": "header",
+                    "content": "Image"
+                  },
+                 
+                  {
+                    "type": "image_picker",
+                    "id": "slide_img",
+                    "label": "Desktop Banner"
+                  },   	
+                    
+                  {
+                    "type": "url",
+                    "id": "brand_linkk",
+                    "label": "Link"
+                  }
+               ]
+          }
+          ],
+            "presets": [
+                {
+                  "name": "Home Image1.2 with timer",
+                  "category": "Blogg"
+                }
+              ]
+          }
+        {% endschema %}
+        
+{% javascript %}
+{% endjavascript %}

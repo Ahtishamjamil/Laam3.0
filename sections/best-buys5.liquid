@@ -1,0 +1,89 @@
+<div data-section-id="{{ section.id }}" data-section-type="filter-products-section">
+    <div class="collectionlist" id="collection-linklist-{{ section.id }}" style="margin:{{section.settings.margin_section}};">
+  
+            <div class="new-txt-collection">
+                {% if section.settings.title != '' %}
+                    <h3>
+                        <span class="inner">
+                            {% if settings.language_enable %}
+                                <span class="lang1">{{ section.settings.title | split: '|' | first }}</span>
+                                <span class="lang2">{{ section.settings.title | split: '|' | last }}</span>
+                            {% else %}
+                                {{ section.settings.title | split: '|' | first }}
+                            {% endif %}
+                        </span>
+                    </h3>
+                {% endif %}
+                {% if section.blocks.size > 0 %}
+                    <div class="category-productss">
+                        <ul class="products-gridd best-brands buys columns{{section.settings.collection_column}}"style="background:{{section.settings.color_body}}">
+                            {% for block in section.blocks %}
+                                <li class="item" >
+                                        <div class="product-image-areaa">
+                                            {% if block.settings.collection_link %}<a href="{{ block.settings.collection_link }}">{% endif %}
+                                            <img src="{{ block.settings.collection_image | img_url: '326x507' }}" alt="{{ block.settings.collection_image.alt }}">
+                                          {% if block.settings.collection_link %}</a>{% endif %}
+                                                                            
+                                            
+                                        </div>
+                                      
+                                </li>
+                            {% endfor %}
+                            <div style="clear:both;"></div>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+      
+    </div>
+</div>
+{% schema %}
+{
+  "name": "6 Section",
+	"max_blocks": 10,
+  "settings": [
+   {
+         "type":"text",
+         "id":"title",
+         "label":"Collection Title",
+         "default":"6 Section"
+      },
+ {
+        "type": "color",
+        "id": "color_body",
+        "label": "Section Background Color",
+        "default": "#f3f6f6"
+      }
+  ],
+  "blocks": [
+     {
+        "type": "brand",
+        "name": "Best Buys Collection1",
+        "settings": [
+      {
+        "type": "header",
+        "content": "collection list Slider"
+      },
+     
+      {
+          "type": "image_picker",
+          "id": "collection_image",
+          "label": "best buys images"
+        },
+
+      {
+        "type": "url",
+        "id": "collection_link",
+        "label": "Link URL"
+      }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "6 Section",
+      "category": "Images"
+    }
+  ]
+}
+{% endschema %}

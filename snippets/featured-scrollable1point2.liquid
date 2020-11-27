@@ -1,0 +1,58 @@
+<div
+  data-subsection
+  data-section-id="{{ block.id }}"
+  data-section-type="slideshow-section"
+  data-align-top="true"
+  {% if block.settings.parallax %}data-parallax="true"{% endif %} style="margin-top:{{block.settings.margin_sectio}}px;margin-bottom:{{block.settings.margin_bottom}}px;">
+  <div class="slideshow-wrapper">
+    <div id="Slideshow-{{ block.id }}"
+        class="hero hero--{{ block.settings.section_height }} hero--{{ block.id }} hero--mobile--{{ block.settings.mobile_height }}"
+        data-aos="hero__animation"
+        data-slide-count="1">
+          {% if block.settings.title != '' %}
+      <a href="{{ block.settings.scroll_title }}">
+                  <h3 class="page-section-heading">
+                      <span class="inner">
+                          {% if settings.language_enable %}
+                              <span class="lang1">{{ block.settings.title | split: '|' | first }}</span>
+                              <span class="lang2">{{ block.settings.title | split: '|' | last }}</span>
+                          {% else %}
+                              {{ block.settings.title | split: '|' | first }}
+                          {% endif %}
+                      </span>
+                  </h3>
+      </a>
+              {% endif %} 
+        <div class="slideshow__slide--{{ section.id }}" data-id="{{ section.id }}">
+            <div class="container custom_margin scrollimg">
+
+          
+               <div class="carosel product_c mb30" id="products-{{ section.id }}">
+        <div class="row">
+         {% if block.settings.featured_collection != blank and collections[block.settings.featured_collection].handle == block.settings.featured_collection and collections[block.settings.featured_collection].products_count > 0 %}
+          <div id="featured-products-section-{{ section.id }}" class="page-sliderone owl-carousel owl-theme featured-products {% if settings.align_height %} use_align_height {% else %} use_image_height {% endif %}">
+            {% for product in collections[block.settings.featured_collection].products limit: block.settings.home_feature_product_limit %}
+            {% include 'product-loop' %}
+            {% endfor %}
+          
+          </div>
+          {% else %}
+          <div id="featured-products-section-{{ section.id }}" class="owl-carousel owl-theme featured-products">
+            {% include 'onboarding-featured-products' %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+              
+              
+              
+              
+              
+              
+          </div>
+          
+        </div>
+      </div>
+  </div>
+</div>
+

@@ -1,0 +1,56 @@
+{% comment %}
+  This file handles each block available on product.sections or page.sections templates.
+  Each block is a near identical duplicate of a section also available on the home page.
+  Exception is sections that had blocks become hard coded options.
+{% endcomment %}
+<div class="page-blocks">
+  {% for block in section.blocks %}
+    <div {{ block.shopify_attributes }}>
+      {% case block.type %}
+
+      {% when 'image-row' %}
+          {% include 'page-block-4section' %}
+      
+      {% when 'image-row-section' %}
+          {% include 'page-block-6section' %}
+
+        {% when 'row-nine-section' %}
+          {% include 'page-block-9section' %}
+       
+        {% when 'page-banner' %}
+          {% include 'page-block-page-banner' %}
+
+        {% when 'Banner-slider-section' %}
+          {% include 'page-block-Banner-slider' %}
+         
+         {% when 'page-mini-banner' %}
+          {% include 'page-block-mini-banner' %}
+      
+         {% when 'singleimageclick1point2' %}
+          {% include 'page-block-scrollable1point2' %}
+        
+        {% when 'singleimageclick2point1' %}
+          {% include 'page-block-scrollable2point1' %}
+        
+      {% when 'scrollable1point2' %}
+          {% include 'featured-scrollable1point2' %}
+      
+      {% when 'scrollable2point1' %}
+          {% include 'featured-scrollable2point1' %}
+      
+      {% when '11scrollable1point2' %}
+          {% include '11-11scrollable1point2' %}
+      
+       {% when '11scrollable2point1' %}
+          {% include '11-11scrollable2point1' %}
+
+          {% when 'page-galleryimage' %}
+          {% include 'page-galleryimage' %}
+       
+      {% when 'page-collection-grid' %}
+          {% include 'page-collection-grid' %}
+
+      {% endcase %}
+    </div>
+  {% endfor %}
+</div>

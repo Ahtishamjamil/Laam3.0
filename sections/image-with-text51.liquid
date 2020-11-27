@@ -1,0 +1,133 @@
+
+{% assign imageWidthBlock =  section.settings.image_width %}
+{% assign textWidthBlock =  12 | minus: imageWidthBlock %}
+{% assign img_size = "750x" %}
+{% capture image_layout %}
+<div class="col-sm-12 custom-col-padding" >
+  <div class="box box_1 red5 feature_1">
+    <figure class=""> 
+      {% if section.settings.image != blank %}
+      <noscript>
+        <img  src="{{section.settings.image | img_url:'300x'}}" 
+             alt="{% if section.settings.image.alt != blank %} {{section.settings.image.alt}} {% else %} {{ section.settings.title | strip_html }} {% endif %}" 
+             srcset="{{ section.settings.image | img_url: img_size }} 1x, {{ section.settings.image | img_url: img_size, scale: 2 }} 2x, {{ section.settings.image | img_url: img_size, scale: 3 }} 3x" >
+      </noscript>
+      {%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      <img 
+           src="{{section.settings.image | img_url:'300x'}}" 
+           alt="{% if section.settings.image.alt != blank %} {{section.settings.image.alt}} {% else %} {{ section.settings.title | strip_html }} {% endif %}" 
+           class="lazyload blur-up custom_image_settings"                         
+           data-src="{{ img_url }}"
+           data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+           data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+           data-sizes="auto"
+           />
+
+      {% else %}
+      {{ "collection-1" | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+    </figure>
+  </div>
+</div>
+{% endcapture %}
+
+<div class="container image_with_text_container custom_margin" data-section-id="{{ section.id }}" data-section-type="image-with-text">
+  <div class="h_row_content h_row_1 section-{{section.id}}">
+    <div class="row">
+
+      {% if section.settings.layout == 'left' %}
+      {{ image_layout }}
+      {% endif %}
+
+      {% if section.settings.layout == 'right' %}
+      {{ image_layout }}
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% comment %}
+<h1 style="text-align: center; margin-bottom: 30rem; margin-top: 5rem; font-size: 4rem">COMING SOON...</h1>
+{% endcomment %}
+{% schema %}
+  {
+    "name": "Image with text",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Image alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+	   {
+        "type": "select",
+        "id": "image_width",
+        "label": "Image width",
+        "default": "6",
+        "options": [
+		  {
+            "value": "3",
+            "label": "25%"
+          },
+		  {
+            "value": "4",
+            "label": "33%"
+          },
+		  {
+            "value": "6",
+            "label": "50%"
+          },
+		  {
+            "value": "8",
+            "label": "66%"
+          }	 
+        ]
+      },	
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image with text",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}
+

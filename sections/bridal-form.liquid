@@ -1,0 +1,155 @@
+<section class="sectionform">
+    <div class="rte bg-whites">
+    <div class="image-div">
+        <img src="{{ 'form-image.jpg' | asset_img_url: '900x' }}" class="form-image-left" alt="Form Bridal Image">
+    </div>
+    <div class="form">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 bounceInLeft">
+                <div class="infor_c">
+
+                   <!-- consultant form below -->
+                    <div class="Bottom-accordion">
+                        <div class="accordion" id="section00"> <h2 class="box-heading" style=" font-size:16px ; color: #333; display: inline-block;">Contact Fashion Consultant</h2>
+                            <!-- <img src="{{ 'laam-logo.png' | asset_img_url: '500x' }}" alt="LAAM LOGO" style="width: 24%;">-->
+                            
+                          <span></span></div> 
+                          <div class="container">
+                          <div class="content">
+                    {% form 'contact' %}
+                    <div class="frm con_frm_inn">
+                    <div class="row">
+                    {% if form.posted_successfully? %}
+                    <div class="alert alert-success m15">
+                        {{ 'contact.form.post_success' | t }}
+                    </div>
+                    {% endif %}
+                        <div class="">
+                            {% include 'form-errors-custom' %}
+                             
+                            <div class='row mb20'>
+                                <!--NAME  -->
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="lbltxt">NAME:<span class="req">*</span></div>
+                                    <input required type="text" id="contactFormName" class="txtbox width-100" name="contact[name]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                                </div>
+                                
+                                <!-- EMAIL -->
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="lbltxt">EMAIL:<span class="req">*</span></div>
+                                    <input required type="email" name="contact[email]" id="contactFormEmail" class="txtbox width-100" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                                </div>
+                            </div>
+
+                            <div class='row mb20'>
+                                <!-- PHONE --> 
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="lbltxt">WHATSAPP NUMBER:<span class="req">*</span></div>
+                                    <input required type="text" id="contactFormPhone" class="txtbox width-100" name="contact[phone]" autocapitalize="words" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                                </div>
+                                
+                                <!-- DESIGNER -->
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="lbltxt">FAVOURITE DESIGNER (MAY WRITE MORE THAN 1):<span class="req">*</span></div>
+                                    <input required type="text" name="contact[designer]" id="contactFormDesigner" class="txtbox width-100" >
+                                </div>
+                            </div>
+
+                            <div class='row mb20'>
+                                <!--FUNCTION  -->
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="lbltxt">FUNCTION:<span class="req">*</span></div>
+                                    <select required class="width-100" id="ContactFormFunction" name="contact[Function]">
+                                        <option>Barat</option>
+                                        <option>Nikkah</option>
+                                        <option>Walima</option>
+                                        <option>Mehandi</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- TENTATIVE WEDDING DATE -->
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="lbltxt">WEDDING DATE (MONTH/YEAR):<span class="req">*</span></div>
+                                    <input required type="text" name="contact[weddingDate]" id="contactFormWeddingDate" class="txtbox width-100" >
+                                </div>
+                            </div>
+
+                            <div class='row mb20'>
+                                <!--BUDGET  -->
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="lbltxt">CHOOSE BUDGET:<span class="req">*</span></div>
+                                    <select required class="width-100" id="ContactFormBudget" name="contact[Budget]">
+                                        <option>BELOW PKR 3,00,000</option>
+                                        <option>PKR 3,00,000 - PKR 4,00,000</option>
+                                        <option>PKR 4,00,000 - PKR 5,00,000</option>
+                                        <option>ABOVE PKR 5,00,000</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- DESCRIBE YOUR DREAM BRIDAL LOOK -->
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="lbltxt">DESCRIBE YOUR DREAM BRIDAL LOOK:<span class="req">*</span></div>
+                                    <input required type="text" name="contact[dreamLook]" id="contactFormDreakLook" class="txtbox width-100" >
+                                </div>
+                            </div>
+
+                            <!-- FROM WHERE YOU HEARD ABOUT US -->
+                            <div class="row mb20">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="lbltxt">WHERE DID YOU HEAR ABOUT US?:<span class="req">*</span></div>
+                                    <input required type="text" name="contact[WhereYouHeard]" id="contactFormWhereYouHeard" class="txtbox width-100" >
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="lbltxt m60"><strong>TERMS & CONDITIONS</strong></div>
+                                <ol class="terms">
+                                    <li> One winner would be selected at random among the entries received, though a lucky draw.</li>
+                                    <li>The contest is open worldwide. Contestants from any country can take part.</li>
+                                    <li>The contest would end on 30 June, 2020. Thus the entries received before 30 June, 2020 would only qualify.</li>
+                                    <li>Lucky draw would take place on 5 July, 2020 and winner of the contest would be announced on 10 July, 2020 at the official platforms of LAAM i.e. <a href="https://laam.pk/">LAAM.pk</a>, Instagram (laamofficial) and Facebook.</li>
+                                  <li>The winner, as announced by <a href="https://laam.pk/">LAAM.pk</a>, would win a voucher worth PKR 300,000 (redeemable to purchase Bridal only at <a href="https://laam.pk/">LAAM.pk</a>. The voucher would be valid for 1 year only, from 'Date of Issuance' of the voucher.).</li>
+                                    <li>For details regarding the contest or general bridal outfit consultation, contact our fashion consultant for free at Whats App: +923040049999.</li>
+                                </ol>
+                            </div>
+                    
+                            <div class="row mb20">
+                                <div class="col-sm-12 ">
+                                <div class="clearfix frm_bot">
+                                    <input type="submit" class="btn_c" style="width: 100%;" value="{{ 'contact.form.send' | t }}">
+                                    <!-- <input type="reset" class="info_btn" value="{{ 'contact.form.clear' | t }}"> -->
+                                    <!-- <span class="reqired">* {% comment %}{{ 'contact.form.required' | t }}  {% endcomment %}</span> -->
+                                </div>
+                                </div>
+                            </div>
+
+                    {% endform %}
+                <!-- Whatsapp button -->
+                <!-- <div class="whats-app">
+                    <span>
+                      <a class="whatsapp-btn" href="https://api.whatsapp.com/send?phone=923040049999&text=Hi, I want to consult about this product {{ product.title | escape }} {{ shop.url | escape }}{{ product.url | escape }}"> <span><img src="{{ 'whatsapp.png' | asset_url }}" style="padding-right: 4px; padding-bottom: 2px;">Chat with fashion consultant</span></a>
+                    </span>
+                </div> -->
+            
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    
+        {% render 'size_chart' %}
+        
+    {% render 'shipping-details' %}
+                           
+                            {% render 'return-policy' %}
+                          
+                            </div>
+    </div>
+       
+    </div>
+    </div>
+    </div>
+    </div>
+    
+</section>
+

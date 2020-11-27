@@ -1,0 +1,95 @@
+<div class="container mt-3 customer-pt">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item active">
+      <a class="nav-link active" data-toggle="tab" href="#Urgent">For Urgent Queries</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#general">For General Queries</a>
+    </li>
+
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="Urgent" class="tab-pane active"><br>
+      <label>Order Number</label>
+         <input type="text" placeholder="LAAM----" id="order_number" oninput="getInputValue()">
+     <label>Order Number</label>
+      <select id="refund" name="contact[query]" oninput="getInputValue()">
+    <option value="refund">Refund</option>
+    <option value="delivery">Order Delivery</option>
+    <option value="Change">Change in Order</option>
+</select>
+      <label>Details</label>
+      <textarea name="contact[details]" id="details" oninput="getInputValue()"></textarea>
+    <a href="" class="btn_c generalbtn" id="submit" onclick="onSubmit()">Submit</a>
+  <script>
+    function getInputValue(){
+       
+
+
+            // Selecting the input element and get its value 
+            var inputVal = document.getElementById("order_number").value;
+          var inputVall = document.getElementById("refund").value;
+          var inputValll = document.getElementById("details").value;
+          var whatslink = `https://api.whatsapp.com/send?phone=923167776518&text=Name:%20${inputVal}%0AEmail:%20${inputVall}%0AMessage:%20${inputValll}`
+         var e = document.getElementById("submit");
+          e.href = whatslink;
+    }
+
+    function onSubmit(){
+        var name1 = document.getElementById("order_number").value;
+
+        if(name1.length <= 0){
+            alert("Order number is required");
+        }
+    }
+
+
+    
+    </script>  
+   
+    </div>
+    <div id="general" class="tab-pane fade"><br>
+     
+            {% form 'contact' %}
+      <label>Order Number</label>
+            <input type="text" placeholder="LAAM----" name="contact[number]" id="number" required>
+      <label>Order Number</label>
+      <select id="product-select-option-0" name="contact[query]">
+    <option value="refund">Refund</option>
+    <option value="delivery">Order Delivery</option>
+    <option value="Change">Change in Order</option>
+</select>
+      <label>Details</label>
+      <textarea name="contact[details]"></textarea>
+       <input type="submit" class="btn_c generalbtn" value="{{ 'contact.form.send' | t }}">
+            {% endform %}
+    </div>
+
+  </div>
+</div>
+ {% schema %}
+    {
+      "name": "Customer Care Form",
+      "settings": [
+        {
+          "type": "text",
+          "id": "customer_form",
+          "label": "form"
+        }
+      
+        
+        
+          ]
+        }
+      
+  {% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+ 
+{% endjavascript %}

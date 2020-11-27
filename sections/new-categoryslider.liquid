@@ -1,0 +1,80 @@
+<div class="container custom_margin mb-hde">
+<div class="carosel">
+    <div class="row">
+     <div id="featured-products-section-{{ section.id }}" class="category-listt owl-carousel">
+        {% for block in section.blocks %}
+        {% if block.settings.brand_link %}<a href="{{ block.settings.brand_link }}">{% endif %}
+          <img src="{{ block.settings.slide_img | img_url: 'master' }}" alt="{{ block.settings.slideshow_image.alt }}">
+        {% if block.settings.brand_link %}</a>{% endif %}
+            {% endfor %}
+      </div>
+     
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Category list collection",
+    "max_blocks": 20,
+    "settings": [
+    {
+        "type": "select", 
+         "id": "slideshow_width",
+          "label": "Layout", 
+           "options":[ 
+           { 
+         "value": "full", 
+         "label": "Full-width" 
+        }, { 
+          "value": "contained", 
+          "label": "Contained"
+    } ], 
+    "default": "full"
+    }, { 
+      "type": "checkbox",
+       "id": "show_brands_slider",
+        "label": "Enable brands slider",
+         "default": true }, { 
+           "type": "header",
+            "content": "Info" 
+          }, 
+          { 
+            "type": "paragraph",
+            "content": "You may upload up to 25 brands" },
+             {
+                "type": "paragraph",
+    "content": "Please try to use the same pixel size for all images - I've suggested 133px by 73px but you can use whatever other size you want" } ], 
+	
+    "blocks" : [
+      {
+        "type": "Text",
+        "name": "Image",
+        
+        "settings": [
+
+          {
+            "type": "header",
+            "content": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "slide_img",
+            "label": "Image"
+          },   	
+
+          {
+            "type": "url",
+            "id": "brand_link",
+            "label": "Link"
+          }
+	     ]
+	}
+  ],
+    "presets": [
+        {
+          "name": "Category list collection",
+          "category": "Collection"
+        }
+      ]
+  }
+{% endschema %}

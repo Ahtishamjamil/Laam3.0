@@ -1,0 +1,28 @@
+{% layout none %}<?xml version="1.0" encoding="UTF-8" ?>
+    <?xml-stylesheet type="text/css" href="rss.css" ?>
+    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>{{ shop.name }}</title>
+        <link>{{ shop.url }}</link>
+        <description>{% include 'shopdesc' %}</description>
+         <image>
+            <link>{{ shop.url }}</link>
+            <url>{{ shop.url }}/feedlogo.jpg</url>
+            <title>{{ shop.name }}</title>
+        </image>
+        <language>en-us</language>
+        <copyright>Copyright {{ "now" | date: "%Y" }} {{ shop.name }}</copyright>
+        <atom:link href="{{shop.url}}/pages/rss" rel="self" type="application/rss+xml" />
+        {% paginate collections.all-products.products by 200 %}{% for product in collections.all-products.products %}{% if product.type != 'Sample' %}<item>
+            <title><![CDATA[{{ product.title | strip_html }}]]></title>
+            <guid>{{ shop.url }}{{ product.url }}</guid>
+            <description><![CDATA[{% for image in product.images limit: 1 %}<p><img src="{{ image | product_img_url: 'medium' }}" 
+            alt="{{ product.title | strip_html }}" /></p>{% endfor %}<p><a href="{{ shop.url }}{{ product.url }}">
+            {{ product.title | strip_html }}</a></p>
+            <p><strong>{{ product.price_min | money }}{% if product.price_varies %} - 
+            {{ product.price_max | money }}{% endif %}</strong></p>
+            <p>{{product.description | strip_html | truncatewords: 150}}</p>]]></description>
+        </item>
+        {% endif %}{% endfor %}{% endpaginate %}
+    </channel>
+</rss> 

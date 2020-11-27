@@ -1,0 +1,15 @@
+{% assign product_value = product.metafields.return_policy.name %}
+{% assign condition = shop.metafields.return_policy[product_value] %}
+
+{% if product.metafields.return_policy != blank %}
+  <div class="accordion img-ml" id="section4"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/Untitled-4.png?v=1600277566" alt="IMG"><h3> RETURN POLICY</h3><span></span></div>
+  <div class="container">
+    <div class="content">
+      <span>
+        {% if condition != blank %}
+          {{shop.metafields.return_policy[product_value]}}
+        {% endif %}
+      </span>
+    </div>
+  </div>
+{% endif %}                         

@@ -1,0 +1,52 @@
+{% assign featured = featured_collection %}
+{% assign collection = collections[featured] %}
+{% assign img_size = "350x"%}
+{% if feature_product_grid_layout == "col-md-6" %}
+{% assign img_size = "550x"%}
+{% endif %}
+
+<div data-section-id="{{ section_id }}" data-section-type="featured-products-section" data-reviews-stars="{{product_reviews_stars}}">
+  <div class="container custom_margin">
+    <div class="h_row_content h_row_4 featured-products">
+      <div class="clearfix">
+          <!-- <h2 class="h3_center">{{ section.settings.title | escape }}</h2> -->
+          <a href="{{title_link}}"><h2 class="h3_center">{{ title | escape }}</h2></a>
+      </div>
+      {% if feature_product_grid_type == "grid" %}
+      <div class="product_c mt30 grid-layout" id="products-{{ section_id }}">
+        <div class="row">
+          {% if featured_collection != blank and collections[featured_collection].handle == featured_collection and collections[featured_collection].products_count > 0 %}
+          <div id="" class="featured-products">
+            {% for product in collections[featured_collection].products limit: product_limit %}
+            <div class="{{ feature_product_grid_layout }} col-sm-4 col-xs-6 mb30"> 
+              {% include 'product-loop' %}
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div id="" class="featured-products">
+            {% include 'onboarding-featured-products' %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <div class="carosel product_c mb30" id="products-{{ section_id }}">
+        <div class="row">
+          {% if featured_collection != blank and collections[featured_collection].handle == featured_collection and collections[featured_collection].products_count > 0 %}
+          <div id="featured-products-section-{{ section_id }}" class="owl-carousel owl-theme featured-products {% if settings.align_height %} use_align_height {% else %} use_image_height {% endif %}">
+            {% for product in collections[featured_collection].products limit: product_limit %}
+            {% include 'product-loop' %}
+            {% endfor %}
+          </div>
+          {% else %}
+          <div id="featured-products-section-{{ section_id }}" class="owl-carousel owl-theme featured-products">
+            {% include 'onboarding-featured-products' %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

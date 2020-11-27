@@ -1,0 +1,90 @@
+<div data-section-id="{{ section.id }}" data-section-type="filter-products-section" class="news-signup"> 
+    <div class="inner-news-letter">
+    {% for block in section.blocks %}
+
+   <div class="newsletter-img"> 
+    <img src="{{ block.settings.collection_image | img_url: 'master' }}" alt="{{ block.settings.collection_image.alt }}">
+</div>
+    <div class="inner-news-letter-content">
+      <h3 class="new-signup hdg">{{ block.settings.column_text }}</h3>
+    <div class="new-signup">{{ block.settings.column_richtext }}</div>
+    
+    
+    <div class="email_box">
+        {% form 'customer' %}
+        {{ form.errors | default_errors }}
+        {% if form.posted_successfully? %}
+            <div class="alert alert-success">{{ 'general.newsletter_form.confirmation' | t }}</div>
+        {% else %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" id="Email"  class="txtbox" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off">
+          <button class="btn btn-link" type="submit" value="{{ 'general.newsletter_form.submit' | t }}" name="commit" id="Subscribe">Subscribe</button>
+        {% endif %}
+        {% endform %}
+      </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+  
+
+  {% schema %}
+  {
+  "name": "NewsletterSignup",
+  "max_blocks": 10,
+  "settings": [
+   {
+         "type":"text",
+         "id":"title",
+         "label":"Collection Title",
+         "default":"4 Section"
+      },
+  {
+        "type": "color",
+        "id": "color_body",
+        "label": "Section Background Color",
+        "default": "#f3f6f6"
+      }
+      
+  ],
+  "blocks": [
+     {
+        "type": "NewsletterSignup",
+        "name": "NewsletterSignup",
+        "settings": [
+      {
+        "type": "header",
+        "content": "collection list Slider"
+      },
+     
+      {
+          "type": "image_picker",
+          "id": "collection_image",
+          "label": "best buys images"
+        },
+        {
+            "type": "text",
+            "id": "column_text",
+            "label": "Text"
+           
+         },
+        {
+            "type": "richtext",
+            "id": "column_richtext",
+            "label": "Text"
+           
+         }
+  
+     
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NewsletterSignup",
+      "category": "News"
+    }
+  ]
+  }
+  {% endschema %}
+  

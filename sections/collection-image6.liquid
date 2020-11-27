@@ -1,0 +1,137 @@
+<div data-section-id="{{ section.id }}" data-section-type="filter-products-section">
+    <div class="collection-linklist" id="collection-linklist-{{ section.id }}" style="margin:{{section.settings.margin_section}};">
+        <div class="containerr">
+            <div class="products-collection col-img">
+                {% if section.settings.title != '' %}
+                    <h3 class="title-widget-col-img">
+                        <span class="inner">
+                            {% if settings.language_enable %}
+                                <span class="lang1">{{ section.settings.title | split: '|' | first }}</span>
+                                <span class="lang2">{{ section.settings.title | split: '|' | last }}</span>
+                            {% else %}
+                                {{ section.settings.title | split: '|' | first }}
+                            {% endif %}
+                        </span>
+                    </h3>
+                {% endif %}
+                {% if section.blocks.size > 0 %}
+                    <div class="category-products col-img">
+                        <ul class="products-grid columns{{section.settings.collection_column}}" style="background:{{section.settings.color_body}}">
+                            {% for block in section.blocks %}
+                                <li class="item" >
+                                    <div class="item-area-list">
+                                        <div class="product-image-area  collection-img col-img">
+                                            
+                                          
+                                          {% if block.settings.collection_link %}<a href="{{ block.settings.collection_link }}">{% endif %}
+                                            <img src="{{ block.settings.collection_image | img_url: 'master' }}" alt="{{ block.settings.collection_image.alt }}">
+                                          {% if block.settings.collection_link %}</a>{% endif %}
+                                                                           
+                                          
+  
+                                           <div class="details-area">
+                                            <div class="linklist">
+                                                <ul>
+                                                    
+                                                    
+                                                    {% if block.settings.link_all_text != '' %}
+                                                        <li class="linkall" >
+                                                            <a class="link-text" href="{{block.settings.collection_link_all}}">
+                                                                {% if settings.language_enable %}
+                                                                    <span class="lang1">{{ block.settings.link_all_text  }}</span>
+                                                                    
+                                                                {% else %}
+                                                                    {{ block.settings.link_all_text  }}
+                                                                {% endif %}
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        </div>
+                                      
+                                       
+                                    </div>
+                                </li>
+                            {% endfor %}
+                            <div style="clear:both;"></div>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+
+{
+  "name":"9 Section",
+  "settings":[
+     {    "type":"header",
+         "content":"Config"
+      },
+      {
+         "type":"text",
+         "id":"margin_section",
+         "label":"Margin Section",
+         "default":"50px 0 50px 0",
+         "info":"Eg: 0px 10px 20px 30px"
+      },
+      {
+         "type":"text",
+         "id":"title",
+         "label":"Collection Title",
+         "default":"Top Categories this Week"
+      },
+{
+        "type": "color",
+        "id": "color_body",
+        "label": "Section Background Color",
+        "default": "#f3f6f6"
+      }
+   ],
+   "blocks":[
+      {
+         "type":"collection",
+         "name":"Collection Link",
+         "settings":[
+            {
+               "type":"image_picker",
+               "id":"collection_image",
+               "label":"Collection Image"
+            },
+            {
+               "type":"url",
+               "id":"collection_link",
+               "label":"Collection Link All"
+            },
+            {
+               "type":"text",
+               "id":"link_all_text",
+               "label":"Link All Text",
+               "default":"View All"
+            }
+         ]
+      }
+   ],
+  
+"presets":[
+      {
+         "name":"9 Section",
+         "category":"Collection",
+         "blocks":[
+            {
+               "type":"collection",
+               "settings":{
+                  "link_all_text":"View All"
+               }
+            }
+         ]
+      }
+   ]
+}
+
+
+{% endschema %} 
+

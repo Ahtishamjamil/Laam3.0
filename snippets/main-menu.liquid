@@ -1,0 +1,656 @@
+<div id="nav">
+  <nav class="navbar" role="navigation">
+    <div class="navbar-header">
+      <!-- <a href="#" class="visible-ms visible-xs pull-right navbar-cart" id="wsnavtoggle"><div class="cart-icon"><i class="fa fa-bars"></i></div></a> -->
+      <span><img id="back" src="https://cdn.shopify.com/s/files/1/2337/7003/files/web_icon-11_ee36a394-7c52-412e-9468-7ab4c33dcc3a.png?v=1600518993"></span>
+      <a href="javascript:void(0)" class="visible-ms visible-xs pull-right navbar-cart hde-home" id="wsnavtoggle"><i  id="hamburger-icon"><img src="https://img.icons8.com/android/24/000000/menu.png"/></i></a>
+      
+      
+      {% if customer %}
+<li class="dropdown-grid no-open-arrow visible-ms visible-xs account-icon-mobile navbar-cart">
+    <!-- <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle navbar-cart" aria-expanded="true"><span class="icons"><i class="fa fa-user"></i></span></a> -->
+    <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle login-trigger" href="#" data-target="#login" data-toggle="modal"><span class="icons afterlogin"><h3>Hi</h3><i class="fa fa-angle-down"></i></span></a>
+    <div class="dropdown-grid-wrapper mobile-grid-wrapper">
+      <div class="dropdown-menu no-padding col-xs-12 col-sm-5" role="menu">
+        {% include 'menu-account' %}
+      </div>
+    </div>
+  </li>
+      {%else%}
+        <li class="dropdown-grid no-open-arrow visible-ms visible-xs account-icon-mobile navbar-cart login-form-content">
+            <!-- <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle navbar-cart" aria-expanded="true"><span class="icons"><i class="fa fa-user"></i></span></a> -->
+            <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle navbar-cart login-trigger" href="#" data-target="#login" data-toggle="modal" aria-expanded="true"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/user_ae1a03b9-9ca8-4592-8d78-261c3903b043.png?v=1603284094" class="withoutlogin login-trigger" href="#" data-target="#login" data-toggle="modal"></a>
+            <div id="login" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button data-dismiss="modal" class="close">&times;</button>
+                <div class="overlay"></div>
+              <div class="modal position">
+                <div class="brand login-text">
+                    <img src="{{ settings.mobilesign_image | img_url: 'master' }}" class="logo">
+                  </div>
+                <div class="form position">
+                    <div class="form-inner">
+                      <!-- Tabs-->
+                      <div class="tabs">
+                        <ul class="tabs">
+                          <li  data-tab="member">
+                            <a href="#member">I am a member</a>
+                          </li>
+                          <li class="current" data-tab="new">
+                            <a href="#new">I am new here</a>
+                          </li>
+                        </ul>
+                        <!--Login Form -->
+                        <div class="form-content" id="member">
+                          <div id="pop-content">
+                          <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                  <div class="sfbox box-login">
+                          
+                                    <div class="alert alert-success" id="resetSuccess" style="display:none;">{{ 'customer.recover_password.success' | t }}</div>
+                          
+                                    {% form 'customer_login' %}
+                          
+                                    {% include 'form-errors-custom' %}
+                                    <div class="frm">
+                                      <h3>Login</h3>
+                                      <p>Please enter your e-mail and password</p>
+                                      <!-- <label for="customer_email" class="lbltxt">{{ 'customer.login.email' | t }}</label> -->
+                                      <input type="email" value="" name="customer[email]" id="customer_email" class="txtbox" {% if form.errors contains "email" %} class="error"{% endif %} autofocus placeholder="Email">
+                                    </div>
+                          
+                          
+                                    {% if form.password_needed %}
+                                    <div class="frm">
+                                      <!-- <label for="customer_password" class="lbltxt">{{ 'customer.login.password' | t }}</label> -->
+                                      <input type="password" value="" name="customer[password]" id="customer_password" class="txtbox" {% if form.errors contains "password" %} class="error"{% endif %} placeholder="Password"> 
+                                      <p class="text-right"><a href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a></p>
+                                    </div>
+                                    {% endif %}
+                          
+                                    <div class="row">
+                                      <div class="login-form-btn">
+                                     <input type="submit" class="btn_c" value="Login"></div>
+                                      <!-- <div class="col-sm-12 col-ms-12 col-xs-12 text-right sign-in">{{ 'customer.login.new_customer' | t }} <a href="/account/register">{{ 'customer.login.sign_up_html' | t }}</a></div> -->
+                                    </div>
+                          
+                                    {% endform %}
+                          
+                          
+                          
+                                    <div id="recover_password" style="display: none;">
+                                      <h2>{{ 'customer.recover_password.title' | t }}</h2>
+                                      <p class="recover-notice">{{ 'customer.recover_password.subtext' | t }}</p>
+                          
+                                      {% form 'recover_customer_password' %}
+                          
+                                      {% include 'form-errors-custom' %}
+                          
+                                      {% if form.posted_successfully? %}
+                                      {% assign reset_success = true %}
+                                      {% endif %}
+                          
+                                      <div class="frm reset-password">
+                                        <label for="recover-email" class="lbltxt">{{ 'customer.recover_password.email' | t }}</label>
+                                        <input type="email" value="" name="email" id="recover-email" class="txtbox">
+                                      </div>
+                          
+                                      <div class="submit-form submit-password">
+                                        <p><input type="submit" class="btn_c" value="{{ 'customer.recover_password.submit' | t }}">
+                          
+                                          <a class="info_btn" href="#" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</a></p>
+                          
+                                        {% endform %}
+                          
+                                        {% if shop.checkout.guest_login %}
+                                        <hr>
+                          
+                                        <h2>Continue as a guest</h2>
+                          
+                                        {% form 'guest_login' %}
+                                        <input type="submit" class="btn_c" value="{{ 'customer.login.guest_continue' | t }}">
+                                        {% endform %}
+                                        {% endif %}
+                                      </div>
+                                    </div>
+                          
+                                  </div>
+                                </div>
+                              </div>
+                            
+                          </div>
+                          
+                          
+                        </div>
+                        <!--Registration form-->
+                         <div class="form-content current" id="new">
+                          <div id="contentt">
+                            <div class="inner-signup-form">
+                            
+                              <div class="row">
+                                <div class="col-md-12 ">
+                                  <div class="sfbox box-registration">
+                                    {% form 'create_customer' %}
+                          
+                                    {% include 'form-errors-custom' %}
+                          
+                                    <div class="frm">
+                                      <h3>Register</h3>
+                                      <p>Please fill in the information below</p>
+                                      <!-- <label for="first_name" class="lbltxt">{{ 'customer.register.first_name' | t }}</label> -->
+                                      <input type="text" value="" name="customer[first_name]" id="first_name" class="txtbox" {% if form.errors contains "first_name" %} class="error"{% endif %} autocapitalize="words" autofocus placeholder="First name">
+                                    </div>
+                                    <div class="frm">
+                                      <!-- <label for="last_name" class="lbltxt">{{ 'customer.register.last_name' | t }}</label> -->
+                                      <input type="text" value="" name="customer[last_name]" id="last_name" class="txtbox" {% if form.errors contains "last_name" %} class="error"{% endif %} autocapitalize="words" placeholder="Last name">
+                                    </div>  
+                                    <div class="frm">
+                                      <!-- <label for="email" class="lbltxt">{{ 'customer.register.email' | t }}</label> -->
+                                      <input type="email" value="" name="customer[email]" id="email" class="txtbox" {% if form.errors contains "email" %} class="error"{% endif %} placeholder="Email">
+                                    </div>
+                                    <div class="frm">
+                                      <!-- <label for="password" class="lbltxt">{{ 'customer.register.password' | t }}</label> -->
+                                      <input type="password" value="" name="customer[password]" id="create_password" class="txtbox" {% if form.errors contains "password" %} class="error"{% endif %} placeholder="Password">
+                                    </div>
+                          
+                                    <div class="row">
+                                      <div class="login-form-btn"><input type="submit" class="btn_c" value="Register"></div>
+                                      <!-- <div class="col-sm-8 col-ms-6 text-right sign-in">{{ 'customer.register.returning' | t }} <a href="/account/login">{{ 'customer.register.sign_in_html' | t }}</a></div> -->
+                                    </div>
+                                    {% endform %}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+        </div>
+      </li>
+      <!--Trigger-->
+
+      {% endif %}
+      
+      <!-- <a href="javascript:void(0);" data-href="/cart" class="visible-ms visible-xs pull-right navbar-cart cart-popup"><div class="cart-icon"><span class="count{% if cart.item_count < 1 %} hidden{% endif %}">{{ cart.item_count }}</span><i class="fa fa-shopping-cart"></i></div></a> -->
+      <a href="javascript:void(0);" data-href="/cart" class="visible-ms visible-xs pull-right navbar-cart cart-popup"><span class="count{% if cart.item_count < 1 %} hidden{% endif %}">{{ cart.item_count }}</span><img class="cart-img" src="https://cdn.shopify.com/s/files/1/2337/7003/files/bag_f82cb19d-37f8-4c2a-88be-9398425f2d11.png?v=1603284094"/></a>
+      <!--    Wishlist    -->
+        <li class="dropdown-grid no-open-arrow visible-ms visible-xs account-icon-mobile navbar-search-icon">
+          <div class="aaa-wishlist-grid" id="aaa_{{ product.id }}" data-product-id="{{ product.id }}"  data-handle="{{product.handle}}" data-customer-mail="{{customer.email}}" data-customer-id="{{ customer.id }}" data-variant-id="{{product.variants.first.id}}" ></div>
+<span class="aaa-ask-the-wishlist-grid aaa-wish-tooltip" data-id="{{ product.id }}" id="aaa-hrt-{{ product.id }}" ><span class="aaa-wish-tooltiptext" ></span></span>
+<a href="javascript:;" class="aaa-wishlist-ask-advice" id="aaa_ask_ad_{{ product.id }}" data-handle="{{product.handle}}" style="display:none;"><i></i> Ask Advice</a> 
+      </li>
+      <!--   End Wishlist     -->
+      <li class="dropdown-grid no-open-arrow visible-ms visible-xs account-icon-mobile navbar-search-icon">
+        <img class="cart-img mt-search mob-search icon"  src="https://cdn.shopify.com/s/files/1/2337/7003/files/search_260abaf0-627d-4ff5-917f-a7a6c6ed7bc5.png?v=1603281736"/>
+      </li>
+
+      {% if section.settings.show_search_bar_mobile %}
+        <div class="visible-mobile-sm mobile-landscape-search">
+          <div class="fixed-search navbar-cart">    
+          {% include 'menu-search' %}
+          </div>
+        </div>
+      {% else %}
+      <a href="/search" class="visible-ms visible-xs pull-right navbar-cart"><div class="cart-icon"><img class="cart-img" src="https://cdn.shopify.com/s/files/1/2337/7003/files/search_01ace4ca-3771-42b0-bbfb-1bdf92067508.png?v=1600266909"></div></a>
+      {% endif %}
+      {% if section.settings.header_style != 'header1' %}
+      <div class="visible-ms visible-xs">
+        {% endif %}
+        {% if section.settings.logo != blank %}
+        
+        {% if template.name == 'index' %} 
+            <h1>
+        {% endif %}
+
+              <a class="navbar-brand" href="/" itemprop="url" style='max-width:{{section.settings.logo_max_width | plus: 15 | append: "px"}}'>
+                <img src="{{ section.settings.logo | img_url: logo_scale_width }}" 
+                     alt="{% if  section.settings.logo.alt != blank %} {{ section.settings.logo.alt}} {% else %}{{ shop.name }} {%endif %}" 
+                     itemprop="logo"  />
+              </a>
+              
+          {% if template.name == 'index' %} 
+              </h1>
+          {% endif %}
+        {% else %}
+          {% if template.name == 'index' %} 
+              <h1 class="h1_homepage">
+          {% endif %}
+         <a class="navbar-brand text-logo" href="/" itemscope itemtype="http://schema.org/Organization">{{ shop.name }}</a>
+           {% if template.name == 'index' %} 
+             </h1>
+          {% endif %}
+        {% endif %}
+        {% if section.settings.header_style != 'header1' %}
+      </div><!-- ./visible-ms visible-xs -->
+      {% endif %}
+    </div>
+    <!-- main menu -->
+    {% if settings.show_multiple_currencies %}
+        {% include 'currencies-switcher' %}
+    {% endif %}    
+    
+    <nav class="wsmenu mobile-mega" role="navigation">
+      <!--      <span> 
+            <i class="fa fa-close nav-close" id="hamburger-icon"></i>
+            </span>-->
+            <ul class="mobile-sub mega_menu wsmenu-list">
+             
+              {% assign firstLevelMenu = linklists[section.settings.header_main_linklist]%}
+               <img class="mobile-banner mobile-view-only" src="{{ settings.mobilebanner_image | img_url: 'master' }}" alt="{{ settings.mobilebanner_image.alt }}">
+            
+              {% for link in firstLevelMenu.links %}
+             
+              {% assign useMegaMenu = true %}
+              {% for childlink in link.links %}
+               {% if childlink.levels != 1%}
+               {% assign useMegaMenu = false %}
+               {% break %}
+              {% endif %}
+              {% endfor %}
+             
+              
+              {% if link.levels == 2 and useMegaMenu == true %}
+                    
+              
+                {% assign child_list_handle_size = link.links.size %}
+            
+                {% assign size_of_grand_child = "" %}
+                {% assign size_of_grand_child_sum = 0 %}
+                
+                 {% for childlink_toget_count in link.links %}        	
+                  {% assign size_of_grand_child = size_of_grand_child | append : childlink_toget_count.links.size %}
+                  {% assign size_of_grand_child_sum = size_of_grand_child_sum | plus: childlink_toget_count.links.size %}
+                  {% if forloop.last == false %}
+                  {% assign size_of_grand_child = size_of_grand_child | append : "|" %}
+                  {% endif %}      
+                 {% endfor %}
+              
+                {% if child_list_handle_size == 1 %}
+                {% assign class_menu = "singlemenu" %} 
+                {% elsif child_list_handle_size == 2 %}
+                {% assign class_menu = "halfmenu" %}
+                {% assign class_child_menu = "col-lg-6 col-md-6 col-sm-6 mb20d" %}
+                {% elsif child_list_handle_size == 3 %}
+                {% assign class_menu = "quartermenu" %}
+                {% assign class_child_menu = "col-lg-4 col-md-4 col-sm-4 mb20d" %}
+                {% elsif child_list_handle_size >= 4 %}
+                {% assign class_menu = "" %}
+                {% assign class_child_menu = "col-lg-3 col-md-3 col-sm-3 mb20d" %}
+                {% endif %}
+      
+                {% if link.links != blank %}
+                <li class="mega_menu_container"><a href="{{ link.url }}"{% if link.links != blank %}class="twin"{% endif %} aria-controls="megamenu_items-{{link.handle}}" aria-haspopup="true" aria-expanded="false">{{ link.title | escape }}<span class="arrow"></span></a>
+                  {% if size_of_grand_child_sum == 0 %}
+                  <ul class="wsmenu-submenu" id="megamenu_items-{{link.handle}}">
+                    {% for childlink in link.links %}
+                    <li><a data-delay="500" href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+                    {% endfor %}
+                  </ul>
+                  {% else %}
+                  <div class="megamenu clearfix {% if child_list_handle_size > 4 and child_list_handle_size == 2 %}halfdiv{% else %}{{class_menu}}{% endif %}">
+                    <ul class="wsmenu-sub-list" id="megamenu_items-{{link.handle}}">
+                      {% for childlink in link.links %}
+                        <li class="{{class_child_menu}} link-list"><h5><a href="{{ childlink.url }}" aria-controls="megamenu_items-{{childlink.handle}}" aria-haspopup="true" aria-expanded="false">{{ childlink.title | escape }}</a></h5>
+                          {% if childlink.links != blank %}
+                          <ul id="megamenu_items-{{childlink.handle}}">
+                            {% for grandchildlink in childlink.links %}
+                            <li class="col-lg-12 col-md-12 col-sm-12 link-list" style="padding-right: 10px !important; padding-left: 15px !important;"><a href="{{ grandchildlink.url }}" style="padding: 3px 0px;" >{{ grandchildlink.title | escape }}</a>
+                              {% if grandchildlink.links != blank %}
+                              <ul class="level hidden-mu">
+                                {% for grandgrandchildlink in grandchildlink.links %}
+                                <li class="{{class_child_menu}} link-list"><a href="{{ grandgrandchildlink.url }}">{{ grandgrandchildlink.title | escape }}</a></li>
+                                {% endfor %}
+                              </ul>
+                            </li>
+                          {% endif %}
+                         {% endfor %}
+                        </ul>
+                      </li>
+                      {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  {% endif %}   
+                </li>
+                {% else %}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                {% endif %}
+              
+              {% else %}
+              
+               {% if link.links != blank %}
+              <li  class="mega_menu_simple_container has-submenu"><a href="{{ link.url }}" aria-controls="megamenu_items-{{link.handle}}" aria-haspopup="true" aria-expanded="false">{{ link.title | escape }}<span class="arrow"></span></a>
+                <ul id="megamenu_items-{{link.handle}}" class="wsmenu-submenu">
+                  {% for childlink in link.links %}
+                    {% if childlink.links != blank %}
+                    <li class="has-submenu-sub"><a href="{{ childlink.url }}" aria-controls="megamenu_items-{{childlink.handle}}" aria-haspopup="true" aria-expanded="false">{{ childlink.title | escape }}<span class="left-arrow"></span></a>
+                      <ul class="wsmenu-submenu-sub" id="megamenu_items-{{childlink.handle}}">
+                        {% for grandchildlink in childlink.links %}  
+                          {% if grandchildlink.links != blank %}
+                            <li class="has-submenu-sub-sub"><a href="{{ grandchildlink.url }}">{{ grandchildlink.title | escape }}<span class="left-arrow"></span></a>
+                              <ul class="wsmenu-submenu-sub-sub">
+                                {% for grandgrandchildlink in grandchildlink.links %}
+                                <li><a href="{{ grandgrandchildlink.url }}">{{ grandgrandchildlink.title | escape }}</a></li>
+                                {% endfor %}
+                              </ul>
+                            </li>
+                            {% else %}
+                            <li><a href="{{ grandchildlink.url }}">{{ grandchildlink.title | escape }}</a></li>
+                          {%endif%} 
+                        {% endfor %}
+                      </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+                   {%endif%}
+                  {% endfor %}
+                </ul>  
+              </li>
+              {% else %}
+              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {%endif%}
+              
+              
+             {%endif%}  
+          {% endfor %}
+              <div class="mobile-view-only">
+       <div class="inner-newsletter mobile">
+              {% include 'social-profiles' %}
+              <p class="newsletter_p">KEEP IN TOUCH</p>
+            </div>
+              <ul class="sign-btn">
+                <li class="withoutlogin login-trigger" href="#" data-target="" data-toggle="modal"><a class="withoutlogin login-trigger" href="#" data-target="" data-toggle="modal"></a>Sign in</li>
+                <li class="withoutlogin login-trigger" href="#" data-target="" data-toggle="modal"><a class="withoutlogin login-trigger" href="#" data-target="" data-toggle="modal"></a>Sign up</li>
+              </ul>
+              <ul class="sign-btn-area">
+                <li><a href="/account"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/user_ae1a03b9-9ca8-4592-8d78-261c3903b043.png?v=1603284094">My Account</a></li>
+                <li><a href="/cart"><img class="cart-img" src="https://cdn.shopify.com/s/files/1/2337/7003/files/bag_f82cb19d-37f8-4c2a-88be-9398425f2d11.png?v=1603284094">My Cart</a></li>
+      <!--           <li><a href="#"><img class="cart-img" src="https://wishlist.aaawebstore.com/upload/wishlist-icon/heart-11.png">My Wishlist</a></li>-->
+              </ul> 
+              <ul class="menu-contact-area">
+                <h3>Contact Us</h3>
+                <li><a href="/pages/become-a-partner">Contact Sales Consultant</a></li>
+                 <li><a href="/pages/customer-care-contact-form"> Contact Customer Care</a></li>
+                 <li><a href="/pages/become-a-seller">Become a Seller</a></li>
+              </ul>
+      
+              <ul class="menu-contact-area lst">
+                <h3>About LAAM</h3>
+        {% capture linklist_iteration %}megamenu5_sub{% endcapture %}
+               {% capture linklist_name %}{{ settings[linklist_iteration] }}{% endcapture %}
+          <a href="{{ settings.megamenu5_link }}">{{ settings.megamenu5_text }}{% if settings.megamenu5_badge and settings.megamenu5_badge != '' %}<span class="menu_badge"></span>{% endif %}</a>
+      <ul>
+            {% for link in linklists[linklist_name].links %}
+            <li>{{ link.title | link_to: link.url }}</li>
+            {% endfor %}
+             </ul>
+              </ul>
+              </div>
+            </ul>
+          </nav>
+    <ul class="hidden-xs nav navbar-nav navbar-right">
+       <li class="dropdown-grid no-open-arrow">
+        {% if section.settings.search_style == 'bar' %}
+        <div class="fixed-search">    
+          {% include 'menu-search' %}
+        </div>
+        {% else %}
+        <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle" aria-expanded="false"><span class="icons"><img class="cart-img mt-search"  src="https://cdn.shopify.com/s/files/1/2337/7003/files/search_260abaf0-627d-4ff5-917f-a7a6c6ed7bc5.png?v=1603281736"/></span></a>
+        <div class="dropdown-grid-wrapper" role="menu">
+          <div class="dropdown-menu fixed_menu col-sm-4 col-lg-3 pl-pr-15">
+            {% include 'menu-search' %}
+          </div>
+        </div>
+        {% endif %}
+      </li>
+      
+        <!--   Wishlist     -->
+            <li class="dropdown-grid no-open-arrow">
+       
+        <a  href="#" class="dropdown-toggle" aria-expanded="false"><span class="icons"><div class="aaa-wishlist-grid" id="aaa_{{ product.id }}" data-product-id="{{ product.id }}"  data-handle="{{product.handle}}" data-customer-mail="{{customer.email}}" data-customer-id="{{ customer.id }}" data-variant-id="{{product.variants.first.id}}" ></div>
+          <span class="aaa-ask-the-wishlist-grid aaa-wish-tooltip" data-id="{{ product.id }}" id="aaa-hrt-{{ product.id }}" ><span class="aaa-wish-tooltiptext" ></span></span>
+          <a href="javascript:;" class="aaa-wishlist-ask-advice" id="aaa_ask_ad_{{ product.id }}" data-handle="{{product.handle}}" style="display:none;"><i></i> Ask Advice</a> </a>
+        <div class="dropdown-grid-wrapper" role="menu">
+          <div class="dropdown-menu fixed_menu col-sm-4 col-lg-3 pl-pr-15">
+         
+          </div>
+        </div>
+       
+      </li>   
+        <!--   End Wishlist     -->
+      <li class="dropdown-grid no-open-arrow ">
+        <a data-toggle="dropdown" data-href="/cart" href="javascript:void(0);" class="dropdown-toggle cart-popup" aria-expanded="true"><div class="cart-icon"><span class="count{% if cart.item_count < 1 %} hidden{% endif %}">{{ cart.item_count }}</span><img class="cart-img mt-img" src="https://cdn.shopify.com/s/files/1/2337/7003/files/bag_f82cb19d-37f8-4c2a-88be-9398425f2d11.png?v=1603284094"/></div></a>
+        <div class="dropdown-grid-wrapper hidden">
+          <div class="dropdown-menu no-padding col-xs-12 col-sm-9 col-md-7" role="menu">
+            {% include 'menu-cart' %}
+          </div>
+        </div>
+      </li>
+      {% if customer %}
+      <li class="dropdown-grid no-open-arrow hell">
+        <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle" aria-expanded="true"><span class="icons afterlogin"><h3>Hi</h3><i class="fa fa-angle-down"></i></span></a>
+        <div class="dropdown-grid-wrapper">
+          <div class="dropdown-menu no-padding col-xs-12 col-sm-5 col-md-4 col-lg-3" role="menu">
+            {% include 'menu-account' %}
+          </div>
+        </div>
+      </li>
+      {%else%}
+      <li class="dropdown-grid no-open-arrow login-form-content">
+        <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle "><span class="icons"><img src="https://cdn.shopify.com/s/files/1/2337/7003/files/user_ae1a03b9-9ca8-4592-8d78-261c3903b043.png?v=1603284094" class="withoutlogin login-trigger" href="#" data-target="#signup" data-toggle="modal" ></i></span></a>
+        <div id="signup" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button data-dismiss="modal" class="close">&times;</button>
+                <div class="overlay"></div>
+              <div class="modal position">
+                <div class="brand login-text">
+                    <img src="{{ settings.desktopsign_image | img_url: 'master' }}" class="logo">
+                  </div>
+                <div class="form position">
+                    <div class="form-inner">
+                      <!-- Tabs-->
+                      <div class="tabs">
+                        <ul class="tabs">
+                          <li  data-tab="member-login">
+                            <a href="#member-login">I am a member</a>
+                          </li>
+                          <li class="current" data-tab="new-signup">
+                            <a href="#new-signup">I am new here</a>
+                          </li>
+                        </ul>
+                        <!--Login Form -->
+                        <div class="form-content" id="member-login">
+                          <div id="pop-content">
+                          <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                  <div class="sfbox box-login">
+                          
+                                    <div class="alert alert-success" id="resetSuccess" style="display:none;">{{ 'customer.recover_password.success' | t }}</div>
+                          
+                                    {% form 'customer_login' %}
+                          
+                                    {% include 'form-errors-custom' %}
+                                    <div class="frm">
+                                      <h3>Login</h3>
+                                      <p>Please enter your e-mail and password</p>
+                                      <!-- <label for="customer_email" class="lbltxt">{{ 'customer.login.email' | t }}</label> -->
+                                      <input type="email" value="" name="customer[email]" id="customer_email" class="txtbox" {% if form.errors contains "email" %} class="error"{% endif %} autofocus placeholder="Email">
+                                    </div>
+                          
+                          
+                                    {% if form.password_needed %}
+                                    <div class="frm">
+                                      <!-- <label for="customer_password" class="lbltxt">{{ 'customer.login.password' | t }}</label> -->
+                                      <input type="password" value="" name="customer[password]" id="customer_password" class="txtbox" {% if form.errors contains "password" %} class="error"{% endif %} placeholder="Password"> 
+                                      <p class="text-right"><a href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a></p>
+                                    </div>
+                                    {% endif %}
+                          
+                                    <div class="row">
+                                      <div class="login-form-btn">
+                                     <input type="submit" class="btn_c" value="Login"></div>
+                                      <!-- <div class="col-sm-12 col-ms-12 col-xs-12 text-right sign-in">{{ 'customer.login.new_customer' | t }} <a href="/account/register">{{ 'customer.login.sign_up_html' | t }}</a></div> -->
+                                    </div>
+                          
+                                    {% endform %}
+                          
+                          
+                          
+                                    <div id="recover_password" style="display: none;">
+                                      <h2>{{ 'customer.recover_password.title' | t }}</h2>
+                                      <p class="recover-notice">{{ 'customer.recover_password.subtext' | t }}</p>
+                          
+                                      {% form 'recover_customer_password' %}
+                          
+                                      {% include 'form-errors-custom' %}
+                          
+                                      {% if form.posted_successfully? %}
+                                      {% assign reset_success = true %}
+                                      {% endif %}
+                          
+                                      <div class="frm reset-password">
+                                        <label for="recover-email" class="lbltxt">{{ 'customer.recover_password.email' | t }}</label>
+                                        <input type="email" value="" name="email" id="recover-email" class="txtbox">
+                                      </div>
+                          
+                                      <div class="submit-form submit-password">
+                                        <p><input type="submit" class="btn_c" value="{{ 'customer.recover_password.submit' | t }}">
+                          
+                                          <a class="info_btn" href="#" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</a></p>
+                          
+                                        {% endform %}
+                          
+                                        {% if shop.checkout.guest_login %}
+                                        <hr>
+                          
+                                        <h2>Continue as a guest</h2>
+                          
+                                        {% form 'guest_login' %}
+                                        <input type="submit" class="btn_c" value="{{ 'customer.login.guest_continue' | t }}">
+                                        {% endform %}
+                                        {% endif %}
+                                      </div>
+                                    </div>
+                          
+                                  </div>
+                                </div>
+                              </div>
+                            
+                          </div>
+                          
+                          
+                        </div>
+                        <!--Registration form-->
+                         <div class="form-content current" id="new-signup">
+                          <div id="contentt">
+                            <div class="inner-signup-form">
+                            
+                              <div class="row">
+                                <div class="col-md-12 ">
+                                  <div class="sfbox box-registration">
+                                    {% form 'create_customer' %}
+                          
+                                    {% include 'form-errors-custom' %}
+                          
+                                    <div class="frm">
+                                      <h3>Register</h3>
+                                      <p>Please fill in the information below</p>
+                                      <!-- <label for="first_name" class="lbltxt">{{ 'customer.register.first_name' | t }}</label> -->
+                                      <input type="text" value="" name="customer[first_name]" id="first_name" class="txtbox" {% if form.errors contains "first_name" %} class="error"{% endif %} autocapitalize="words" autofocus placeholder="First name">
+                                    </div>
+                                    <div class="frm">
+                                      <!-- <label for="last_name" class="lbltxt">{{ 'customer.register.last_name' | t }}</label> -->
+                                      <input type="text" value="" name="customer[last_name]" id="last_name" class="txtbox" {% if form.errors contains "last_name" %} class="error"{% endif %} autocapitalize="words" placeholder="Last name">
+                                    </div>  
+                                    <div class="frm">
+                                      <!-- <label for="email" class="lbltxt">{{ 'customer.register.email' | t }}</label> -->
+                                      <input type="email" value="" name="customer[email]" id="email" class="txtbox" {% if form.errors contains "email" %} class="error"{% endif %} placeholder="Email">
+                                    </div>
+                                    <div class="frm">
+                                      <!-- <label for="password" class="lbltxt">{{ 'customer.register.password' | t }}</label> -->
+                                      <input type="password" value="" name="customer[password]" id="create_password" class="txtbox" {% if form.errors contains "password" %} class="error"{% endif %} placeholder="Password">
+                                    </div>
+                          
+                                    <div class="row">
+                                      <div class="login-form-btn"><input type="submit" class="btn_c" value="Register"></p></div>
+                                      <!-- <div class="col-sm-8 col-ms-6 text-right sign-in">{{ 'customer.register.returning' | t }} <a href="/account/login">{{ 'customer.register.sign_in_html' | t }}</a></div> -->
+                                    </div>
+                                    {% endform %}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+        </div>
+      </li>
+      <!--Trigger-->
+
+
+      {% endif %}
+     
+    </ul>
+  </nav>
+</div>
+<style>
+.modal-backdrop.fade.in {
+    display: none;
+}
+
+</style>
+<script>
+  
+$(document).ready(function(){
+  $("#hamburger-icon").click(function(){
+    console.log("hello");
+    $(".header_bot.enabled-sticky-menu").addClass("sticky");
+  });
+});
+  $(document).ready(function() {
+  $('ul.tabs li').click(function() {
+    var tab_id = $(this).attr('data-tab');
+    $('ul.tabs li').removeClass('current');
+    $('.form-content').removeClass('current');
+    $(this).addClass('current');
+    $("#" + tab_id).addClass('current');
+  })
+});
+  function showRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'block';
+    document.getElementById('customer_login').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover_password').style.display = 'none';
+    document.getElementById('customer_login').style.display = 'block';
+  }
+
+  // Allow deep linking to the recover password form
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success %}
+  document.getElementById('resetSuccess').style.display = 'block';
+  {% endif %}
+</script>

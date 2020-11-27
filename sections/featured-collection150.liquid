@@ -1,0 +1,290 @@
+<!-- THIS IS HOMEPAGE FEATURED COLLECTIONS CODE -->
+<!-- home homepage this is really homepage featured collection-->
+
+<!-- Custom code -->
+<!-- assigning the blocks -->
+{% assign block_1 = section.blocks[0] %}
+{% assign block_2 = section.blocks[1] %}
+{% assign block_3 = section.blocks[2] %}
+{% assign block_4 = section.blocks[3] %}
+{% assign block_5 = section.blocks[4] %}
+{% assign block_6 = section.blocks[5] %}
+{% assign block_7 = section.blocks[6] %}
+{% assign block_8 = section.blocks[7] %}
+
+
+{% assign str = "block_" %}
+{% assign num = 0 %}
+
+<!-- 
+{% assign one = num | plus: 1 %}
+{% assign newVar = x | append: one %} -->
+
+
+
+<!--  end custom code-->
+{% assign featured = section.settings.featured_collection %}
+{% assign collection = collections[featured] %}
+{% assign img_size = "350x"%}
+{% if section.settings.home_feature_product_grid_layout == "col-md-6" %}
+{% assign img_size = "550x"%}
+{% endif %}
+<div data-section-id="{{ section.id }}" data-section-type="featured-products-section" data-reviews-stars="{{section.settings.show_product_reviews_stars}}">
+  <div class="container custom_margin">
+    <div class="h_row_content h_row_4 featured-products">
+      <div class="clearfix">
+          <a href="{{section.settings.title_link}}"><h2 class="h3_center">{{ section.settings.title | escape }}</h2></a>               
+      </div>
+      {% if section.settings.home_feature_product_grid_type == "grid" %}
+      <div class="product_c mt30 grid-layout" id="products-{{ section.id }}">
+        <div class="row">
+          {% if section.settings.featured_collection != blank and collections[section.settings.featured_collection].handle == section.settings.featured_collection and collections[section.settings.featured_collection].products_count > 0 %}
+          <div id="" class="featured-products">
+            {% for product in collections[section.settings.featured_collection].products limit: section.settings.home_feature_product_limit %}
+            <div class="{{ section.settings.home_feature_product_grid_layout }} col-sm-4 col-xs-6 mb30"> 
+              {% include 'product-loop' %}
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="featured-products">
+            {% include 'onboarding-featured-products' %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <div class="carosel product_c mb30" id="products-{{ section.id }}">
+        <div class="row">
+          {% if section.settings.featured_collection != blank and collections[section.settings.featured_collection].handle == section.settings.featured_collection and collections[section.settings.featured_collection].products_count > 0 %}
+          <div id="featured-products-section-{{ section.id }}" class="owl-carousel owl-theme featured-products {% if settings.align_height %} use_align_height {% else %} use_image_height {% endif %}">
+            {% for product in collections[section.settings.featured_collection].products limit: section.settings.home_feature_product_limit %}
+
+            {% assign newStr = str | append: num %}
+            {% assign newStr =  section.blocks[num] %}
+            {% assign num = num | plus: 1 %}
+
+            <div class="main_box_featured_collection">
+                <div class="main_box{% if section.settings.collection_overlay %} quick-view-overlay {% endif %}">
+                <div class="box_1">
+                    {% if on_sale and section.settings.show_sale_badge %}
+                    <div class="on-sale">{{ 'products.product.sale' | t }}</div>
+                    {% endif %}
+                    {% if sold_out %}
+                    <div class="sold-out">{{ 'products.product.sold_out' | t }}</div>
+                    {% endif %}
+                    <div class="product-image">
+                    
+                    <a href="{{newStr.settings.promo_banner_link}}">
+                        <noscript>
+                        <img  src="{{ product.featured_image.src | product_img_url: "300x"}}" srcset="{{ product.featured_image.src | product_img_url: img_size}} 1x, {{ product.featured_image.src | product_img_url: img_size, scale: 2}} 2x, {{ product.featured_image.src | product_img_url: img_size, scale: 3}} 3x" alt="{{ product.featured_image.alt | escape }}">
+                        </noscript>
+                        <img class="lazyload"
+                            src="{{ product.featured_image.src | product_img_url: "300x"}}"
+                            data-srcset="{{ product.featured_image.src | product_img_url: img_size}} 1x, {{ product.featured_image.src | product_img_url: img_size, scale: 2}} 2x, {{ product.featured_image.src | product_img_url: img_size, scale: 3}} 3x"
+                            alt="{{ product.featured_image.alt | escape }}"
+                            style="{% if max_img_width == '0px' %} width: 500px; {% else %} max-width: 500px {% endif %}"/>  
+                        
+                        <div class="spinner-cube">
+                        <div class="loadFacebookG"></div>
+                        </div>	
+                        
+                    </a>
+                    </div>
+                    {% if section.settings.collection_overlay and product.template_suffix != 'nobuy' %}
+                    <div class="overlay hidden-sm hidden-xs">
+                        {% include 'product-quick-view-btn' qvp:product %}
+                    </div>
+                    {% endif %}
+                </div>
+                </div>
+
+                <a href="{{newStr.settings.promo_banner_link}}">
+                  <div class="featured_collection_banner" id="featured_collection_ban">
+                    <!-- row 1 -->
+                    <div class="row marginLeft">
+                      <!-- <div class="col-xs-3"></div>
+                        <div class="col-xs-6">
+                          <div class="feature_box_image">
+                          {% comment %} <img src="{{newStr.settings.small_logo | img_url:'300x'}}" alt="Brand logos"> {% endcomment %}
+                        </div>
+                      </div> -->
+                      <div class="col-xs-9"></div>
+                    </div>
+
+                    <!-- row 2 -->
+                    <div class="row w-100">
+                      
+                      <h2 class="explore_h2">{{newStr.settings.promo_banner_heading}}</h2>
+                      <h2 class="explore_h22">Explore <span class="fa fa-plus" style="font-size: 8px;"></span></h2>
+                    </div>
+
+                    <!-- row 3 -->
+                    <!-- <div class="row">
+                      <div class="col-xs-3"></div>
+                      <div class="col-xs-6 nopad">
+                        <a href="{{newStr.settings.promo_banner_link}}"><h2 class="explore_h22">Explore <span class="fa fa-plus" style="font-size: 8px;"></span></h2></a>
+                      </div>
+                      <div class="col-xs-3"></div>
+                    </div> -->
+                  </div>
+                </a>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div id="featured-products-section-{{ section.id }}" class="owl-carousel owl-theme featured-products">
+            {% include 'onboarding-featured-products' %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Featured collection",
+    "settings": [
+	  {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured collection"
+      },	 
+      {
+        "type": "url",
+        "id": "title_link",
+        "label": "title link"
+      }, 
+	 {
+        "type": "collection",
+        "id": "featured_collection",
+        "label": "Choose collection"
+      },
+      {
+        "type": "select",
+        "id": "home_feature_product_grid_type",
+        "label": "Format",
+        "options": [
+          {
+            "value": "carousel",
+            "label": "Carousel"
+          },
+          {
+            "value": "grid",
+            "label": "Grid"
+          }
+        ],
+        "default": "grid"
+      },
+	  {
+        "type": "select",
+        "id": "home_feature_product_grid_layout",
+        "label": "Grid layout",
+		"info":"Only applicable if you chose \"Grid\" above",	
+        "options": [
+          {
+            "value": "col-md-6",
+            "label": "Two columns"
+          },
+          {
+            "value": "col-md-4",
+            "label": "Three columns"
+          },
+          {
+            "value": "col-md-3",
+            "label": "Four columns"
+          },
+          {
+            "value": "col-md-2",
+            "label": "Six columns"
+          }
+        ],
+        "default": "col-md-3"
+      },
+	  {
+        "type": "range",
+        "id": "home_feature_product_limit",
+        "label": "Number of products",
+          "min":       2,
+        "max":        24,
+        "step":       1,
+        "default": 12
+      },	
+	  {
+        "type": "checkbox",
+        "id": "show_grid_type",
+        "label": "Show product type"
+      },
+	  {
+        "type": "checkbox",
+        "id": "show_sale_badge",
+        "label": "Show sale badge",
+		"default": true
+      },
+	  {
+        "type": "checkbox",
+        "id": "collection_overlay",
+        "label": "Enable product quick view"
+      },
+	  {
+        "type": "checkbox",
+        "id": "show_product_reviews_stars",
+        "label": "Show review stars",
+		"info": "Shopify product reviews app must be enabled"
+      },
+    
+      {
+        "type": "url",
+        "id": "text_url",
+        "label": "See more Text Link"
+      }
+    ],
+    "blocks" : [
+      {
+        "type": "Text",
+        "name": "Text",
+        
+        "settings": [
+
+          {
+            "type": "header",
+            "content": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "small_logo",
+            "label": "Image",
+			      "info": "800 x 600px jpg recommended"
+          },   	
+          {
+            "type": "text",
+            "id": "promo_banner_heading",
+            "label": "Heading",
+			"info": "10-12 words maximum"
+          },
+          {
+            "type": "richtext",
+            "id": "promo_banner_subtext",
+            "label": "Text",
+			"info": "10-12 words maximum"
+          },
+          {
+            "type": "url",
+            "id": "promo_banner_link",
+            "label": "Link"
+          }
+	     ]
+	}
+  ],
+    "presets": [
+        {
+          "name": "Featured Collection Card",
+          "category": "Collection"
+        }
+      ]
+  }
+{% endschema %}

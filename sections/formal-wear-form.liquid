@@ -1,0 +1,145 @@
+<section class="sectionform">
+    <div class="rte bg-whites">
+    <div class="image-div">
+        <img src="{{ 'form-image.jpg' | asset_img_url: '900x' }}" class="form-image-left" alt="Form Bridal Image">
+    </div>
+    <div class="form">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 bounceInLeft">
+                <div class="infor_c">
+
+                   <!-- consultant form below -->
+                    <div class="Bottom-accordion">
+                        <div class="accordion" id="section00"> <h2 class="box-heading" style=" font-size:16px ; color: #333; display: inline-block;">Contact Fashion Consultant</h2>
+                            <!-- <img src="{{ 'laam-logo.png' | asset_img_url: '500x' }}" alt="LAAM LOGO" style="width: 24%;">-->
+                            
+                          <span></span></div> 
+                          <div class="container">
+                          <div class="content">
+                            {% form 'contact' %}
+                            <div class="frm con_frm_inn">
+                            <div class="row">
+                            {% if form.posted_successfully? %}
+                            <div class="alert alert-success m15">
+                                {{ 'contact.form.post_success' | t }}
+                            </div>
+                            {% endif %}
+                                <div class="m15">
+                                    {% include 'form-errors-custom' %}
+                                     
+                                    <div class='row mb20'>
+                                        <!--NAME  -->
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="lbltxt">NAME:<span class="req">*</span></div>
+                                            <input required type="text" id="contactFormName" class="txtbox width-100" name="contact[name]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                                        </div>
+                                        
+                                        <!-- EMAIL -->
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="lbltxt">EMAIL:<span class="req">*</span></div>
+                                            <input required type="email" name="contact[email]" id="contactFormEmail" class="txtbox width-100" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                                        </div>
+                                    </div>
+        
+                                    <div class='row mb20'>
+                                        <!-- PHONE --> 
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="lbltxt">WHATSAPP NUMBER:<span class="req">*</span></div>
+                                            <input required type="text" id="contactFormPhone" class="txtbox width-100" name="contact[phone]" autocapitalize="words" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                                        </div>
+                                        
+                                        <!-- DESIGNER -->
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="lbltxt">FAVOURITE DESIGNER:<span class="req">*</span></div>
+                                            <input required type="text" name="contact[designer]" id="contactFormDesigner" class="txtbox width-100" >
+                                        </div>
+                                    </div>
+        
+                                    <div class='row mb20'>
+                                        <!--FUNCTION  -->
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="lbltxt">FUNCTION:<span class="req">*</span></div>
+                                            <select required class="width-100" id="ContactFormFunction" name="contact[Function]">
+                                                <option>Barat</option>
+                                                <option>Nikkah</option>
+                                                <option>Walima</option>
+                                                <option>Mehandi</option>
+                                                  <option>OTHER EVENTS</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- TENTATIVE WEDDING DATE -->
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="lbltxt">EVENT DATE (MONTH/YEAR):<span class="req">*</span></div>
+                                            <input required type="text" name="contact[weddingDate]" id="contactFormWeddingDate" class="txtbox width-100" >
+                                        </div>
+                                    </div>
+        
+                                    <div class='row mb20'>
+                                        <!--BUDGET  -->
+                                        <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="lbltxt">CHOOSE BUDGET:<span class="req">*</span></div>
+                                            <select required class="width-100" id="ContactFormBudget" name="contact[Budget]">
+                                                <option>BELOW PKR 1,00,000</option>
+                                                <option>PKR 1,00,000 - PKR 1,50,000</option>
+                                                <option>PKR 1,50,000 - PKR 2,00,000</option>
+                                                <option>ABOVE PKR 2,50,000</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- WHAT IS YOUR DREAM LOOK -->
+                                    {% comment %}    <div class="col-sm-12 col-md-6 col-lg-6">
+                                            <div class="lbltxt">WHAT IS YOUR DREAM LOOK:<span class="req">*</span></div>
+                                            <input required type="text" name="contact[dreamLook]" id="contactFormDreakLook" class="txtbox width-100" >
+                                        </div>
+                                    </div>
+        
+                                    <!-- FROM WHERE YOU HEARD ABOUT US -->
+                                    <div class="row mb20">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="lbltxt">WHERE DID YOU HEAR ABOUT US?:<span class="req">*</span></div>
+                                            <input required type="text" name="contact[WhereYouHeard]" id="contactFormWhereYouHeard" class="txtbox width-100" >
+                                        </div>
+                                    </div> {% endcomment %}
+                                    
+                                   
+                            
+                                    <div class="row mb20">
+                                        <div class="col-sm-12 ">
+                                        <div class="clearfix frm_bot">
+                                            <input type="submit" class="btn_c" style="width: 100%;" value="{{ 'contact.form.send' | t }}">
+                                            <!-- <input type="reset" class="info_btn" value="{{ 'contact.form.clear' | t }}"> -->
+                                            <!-- <span class="reqired">* {% comment %}{{ 'contact.form.required' | t }}  {% endcomment %}</span> -->
+                                        </div>
+                                        </div>
+                                    </div>
+        
+                            {% endform %}
+                <!-- Whatsapp button -->
+                <!-- <div class="whats-app">
+                    <span>
+                      <a class="whatsapp-btn" href="https://api.whatsapp.com/send?phone=923040049999&text=Hi, I want to consult about this product {{ product.title | escape }} {{ shop.url | escape }}{{ product.url | escape }}"> <span><img src="{{ 'whatsapp.png' | asset_url }}" style="padding-right: 4px; padding-bottom: 2px;">Chat with fashion consultant</span></a>
+                    </span>
+                </div> -->
+            
+            </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        
+
+        </div>
+        
+            {% render 'size_chart' %}
+              {% render 'shipping-details' %}
+                  {% render 'return-policy' %}
+                
+      </div>
+     </div>
+    </div>
+   </div>
+</div>
+    
+</section>
+

@@ -1,0 +1,20 @@
+{% paginate collection.products by 8 %}
+    <div id="AjaxinateLoop" >
+            {% for product in collections[section.settings.featured_collection].products %}
+            <div class="{{ section.settings.home_feature_product_grid_layout }} col-sm-4 col-xs-6 mb10"> 
+              {% comment %} {% include 'product-loop' %} {% endcomment %}
+
+ 
+{% comment %}  {% endcomment %}
+      {% comment %} {% for product in collection.products %} {%endfor%}{% endcomment %}
+        {% include 'product-loop' %}
+    </div>
+      {% endfor %}
+    </div>
+    <div id="AjaxinatePagination">
+      {% if paginate.next %}
+        <a href="{{ paginate.next.url }}"> <center> <button class="butn button5">Load More</button> </center> </a>
+        
+      {% endif %}
+
+{% endpaginate %} 
