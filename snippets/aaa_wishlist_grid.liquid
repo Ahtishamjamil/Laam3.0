@@ -1,5 +1,5 @@
 <div class="aaa-wishlist-grid" id="aaa_{{ product.id }}" data-product-id="{{ product.id }}"  data-handle="{{product.handle}}" data-customer-mail="{{customer.email}}" data-customer-id="{{ customer.id }}" data-variant-id="{{product.variants.first.id}}" ></div>
-<span class="aaa-ask-the-wishlist-grid aaa-wish-tooltip" data-id="{{ product.id }}" id="aaa-hrt-{{ product.id }}" ><i></i><!--<span class="aaa-wish-tooltiptext" ></span>--></span>
+<i class="aaa-ask-the-wishlist-grid aaa-wish-tooltip" data-id="{{ product.id }}" id="aaa-hrt-{{ product.id }} hell" ><i></i><!--<span class="aaa-wish-tooltiptext" ></span>--></i>
 <a href="javascript:;" class="aaa-wishlist-ask-advice" id="aaa_ask_ad_{{ product.id }}" data-handle="{{product.handle}}" style="display:none;"><i></i> Ask Advice</a>
 
 
@@ -7,6 +7,7 @@
 <script>
 $(document).ready(function(){
   $(".aaa-ask-the-wishlist-grid").click(function(){
+
     $(".aaa-ask-the-wishlist-grid i").toggleClass("fa fa-heart");
   });
 });

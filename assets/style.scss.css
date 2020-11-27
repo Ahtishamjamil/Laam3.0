@@ -15846,3 +15846,33 @@ ul.collect-grid.image-row li.item {
 ul.collect-grid.image-row li.item img {
     width: 100%;
 }
+.collection-title-wish {
+  display: flex;
+  justify-content: space-between;
+}
+.collection-title-wish h5 {
+  width: 150px;
+  text-align: left;
+}
+
+.collection-title-wish .aaa-wl-custom-icon {
+  width: 20px!important;
+  height: 23px!important;
+}
+.collection-title-wish .aaa-ask-the-wishlist-grid{
+  background-image: url(https://wishlist.aaawebstore.com/upload/wishlist-icon/heart-11.png);
+  width: 20px!important;
+  height: 23px!important;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  padding: 5px 0px!important;
+  white-space: nowrap!important;
+}
+ .template-collection .fa-heart:after {
+  content: "\f004";
+  color: red;
+  position: absolute;
+  top: 2px;
+  left: 0px;
+  font-size: 20px;
+} 
